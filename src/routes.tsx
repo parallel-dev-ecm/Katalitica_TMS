@@ -107,51 +107,45 @@ const routes = [
       },
     ],
   },
-  { type: "title", title: "Pages", key: "title-pages" },
+  { type: "title", title: "Generales", key: "title-generales" },
   {
     type: "collapse",
-    name: "Pages",
-    key: "pages",
+    name: "Generales",
+    key: "generales",
     icon: <Icon fontSize="medium">image</Icon>,
     collapse: [
       {
-        name: "Profile",
-        key: "profile",
+        name: "Compañias",
+        key: "compañias",
         collapse: [
           {
-            name: "Profile Overview",
-            key: "profile-overview",
-            route: "/pages/profile/profile-overview",
+            name: "Compañia Overview",
+            key: "compañia-overview",
+            route: "/pages/profile/compañia-overview",
             component: <ProfileOverview />,
-          },
-          {
-            name: "All Projects",
-            key: "all-projects",
-            route: "/pages/profile/all-projects",
-            component: <AllProjects />,
           },
         ],
       },
       {
-        name: "Users",
-        key: "users",
+        name: "Seguridad de usuarios",
+        key: "seguridadUsuarios",
         collapse: [
           {
-            name: "New User",
-            key: "new-user",
-            route: "/pages/users/new-user",
+            name: "Seguridad Usuarios",
+            key: "seguridad-usuarios",
+            route: "/pages/users/seguridad-usuarios",
             component: <NewUser />,
           },
         ],
       },
       {
-        name: "Account",
-        key: "account",
+        name: "Centros de Costos",
+        key: "centrosCostos",
         collapse: [
           {
-            name: "Settings",
-            key: "settings",
-            route: "/pages/account/settings",
+            name: "Centro de Costos",
+            key: "centrosCostos",
+            route: "/pages/account/centrosCostos",
             component: <Settings />,
           },
           {
@@ -168,39 +162,15 @@ const routes = [
           },
         ],
       },
-      {
-        name: "Projects",
-        key: "projects",
-        collapse: [
-          {
-            name: "Timeline",
-            key: "timeline",
-            route: "/pages/projects/timeline",
-            component: <Timeline />,
-          },
-        ],
-      },
-      {
-        name: "Pricing Page",
-        key: "pricing-page",
-        route: "/pages/pricing-page",
-        component: <PricingPage />,
-      },
-      { name: "RTL", key: "rtl", route: "/pages/rtl", component: <RTL /> },
+
       { name: "Widgets", key: "widgets", route: "/pages/widgets", component: <Widgets /> },
       { name: "Charts", key: "charts", route: "/pages/charts", component: <Charts /> },
-      {
-        name: "Notfications",
-        key: "notifications",
-        route: "/pages/notifications",
-        component: <Notifications />,
-      },
     ],
   },
   {
     type: "collapse",
-    name: "Applications",
-    key: "applications",
+    name: "Gestion E.T.",
+    key: "gestion_et",
     icon: <Icon fontSize="medium">apps</Icon>,
     collapse: [
       {
@@ -231,8 +201,8 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Ecommerce",
-    key: "ecommerce",
+    name: "Gestion Talento",
+    key: "gestion-talento",
     icon: <Icon fontSize="medium">shopping_basket</Icon>,
     collapse: [
       {
