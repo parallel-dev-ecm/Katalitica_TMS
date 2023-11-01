@@ -1,13 +1,3 @@
-/* Store Setup
-
-Task:
-
-- Connect to db 
-- Set crud user functions.
-
-
-
-*/
 import { create, useStore } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { produce } from "immer";

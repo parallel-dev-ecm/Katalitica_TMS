@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 PRO React TS - v1.0.2
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-2-pro-react-ts
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 // react-routers components
 import { Link } from "react-router-dom";
 
@@ -28,6 +13,7 @@ import MDButton from "components/MDButton";
 // Declaring props types for ProfilesList
 interface Props {
   title: string;
+  colaboradorType?: string;
   profiles: {
     image: string;
     name: string;
@@ -43,7 +29,7 @@ interface Props {
   [key: string]: any;
 }
 
-function ProfilesList({ title, profiles, shadow }: Props): JSX.Element {
+function ProfilesList({ title, colaboradorType, profiles, shadow }: Props): JSX.Element {
   const renderProfiles = profiles.map(({ image, name, description, action }) => (
     <MDBox key={name} component="li" display="flex" alignItems="center" py={1} mb={1}>
       <MDBox mr={2}>
@@ -59,13 +45,12 @@ function ProfilesList({ title, profiles, shadow }: Props): JSX.Element {
       </MDBox>
       <MDBox ml="auto">
         {action.type === "internal" ? (
-          <MDButton component={Link} to={action.route} variant="text" color="info">
+          <MDButton component={Link} variant="text" color="info">
             {action.label}
           </MDButton>
         ) : (
           <MDButton
             component="a"
-            href={action.route}
             target="_blank"
             rel="noreferrer"
             variant="text"

@@ -13,6 +13,76 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
+type MexicanState = 
+  | 'Aguascalientes'
+  | 'Baja California'
+  | 'Baja California Sur'
+  | 'Campeche'
+  | 'Chiapas'
+  | 'Chihuahua'
+  | 'Coahuila'
+  | 'Colima'
+  | 'Durango'
+  | 'Guanajuato'
+  | 'Guerrero'
+  | 'Hidalgo'
+  | 'Jalisco'
+  | 'Mexico State'  // Sometimes just "México"
+  | 'Michoacán'
+  | 'Morelos'
+  | 'Nayarit'
+  | 'Nuevo León'
+  | 'Oaxaca'
+  | 'Puebla'
+  | 'Querétaro'
+  | 'Quintana Roo'
+  | 'San Luis Potosí'
+  | 'Sinaloa'
+  | 'Sonora'
+  | 'Tabasco'
+  | 'Tamaulipas'
+  | 'Tlaxcala'
+  | 'Veracruz'
+  | 'Yucatán'
+  | 'Zacatecas';
+
+const mexicanStates: MexicanState[] = [
+  'Aguascalientes',
+  'Baja California',
+  'Baja California Sur',
+  'Campeche',
+  'Chiapas',
+  'Chihuahua',
+  'Coahuila',
+  'Colima',
+  'Durango',
+  'Guanajuato',
+  'Guerrero',
+  'Hidalgo',
+  'Jalisco',
+  'Mexico State',
+  'Michoacán',
+  'Morelos',
+  'Nayarit',
+  'Nuevo León',
+  'Oaxaca',
+  'Puebla',
+  'Querétaro',
+  'Quintana Roo',
+  'San Luis Potosí',
+  'Sinaloa',
+  'Sonora',
+  'Tabasco',
+  'Tamaulipas',
+  'Tlaxcala',
+  'Veracruz',
+  'Yucatán',
+  'Zacatecas'
+];
+
+export {  mexicanStates };
+
+
 const selectData = {
   gender: ["Male", "Female"],
   birthDate: [

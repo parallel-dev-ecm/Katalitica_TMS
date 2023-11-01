@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 PRO React TS - v1.0.2
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-2-pro-react-ts
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 // @mui material components
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
@@ -24,12 +9,7 @@ import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
 
 function ChangePassword(): JSX.Element {
-  const passwordRequirements = [
-    "One special characters",
-    "Min 6 characters",
-    "One number (2 are recommended)",
-    "Change it often",
-  ];
+  const passwordRequirements = ["Un caracter especial", "Min 6 caracteres", "Min un numero"];
 
   const renderPasswordRequirements = passwordRequirements.map((item, key) => {
     const itemKey = `element-${key}`;
@@ -46,21 +26,21 @@ function ChangePassword(): JSX.Element {
   return (
     <Card id="change-password">
       <MDBox p={3}>
-        <MDTypography variant="h5">Change Password</MDTypography>
+        <MDTypography variant="h5">Cambiar Contraseña</MDTypography>
       </MDBox>
       <MDBox component="form" pb={3} px={3}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <MDInput
               fullWidth
-              label="Current Password"
+              label="Contraseña actual"
               inputProps={{ type: "password", autoComplete: "" }}
             />
           </Grid>
           <Grid item xs={12}>
             <MDInput
               fullWidth
-              label="New Password"
+              label="Contraseña anterior"
               inputProps={{ type: "password", autoComplete: "" }}
             />
           </Grid>
@@ -73,11 +53,11 @@ function ChangePassword(): JSX.Element {
           </Grid>
         </Grid>
         <MDBox mt={6} mb={1}>
-          <MDTypography variant="h5">Password requirements</MDTypography>
+          <MDTypography variant="h5">Requisitos</MDTypography>
         </MDBox>
         <MDBox mb={1}>
           <MDTypography variant="body2" color="text">
-            Please follow this guide for a strong password
+            Utiliza estas características para una contraseña segura.
           </MDTypography>
         </MDBox>
         <MDBox display="flex" justifyContent="space-between" alignItems="flex-end" flexWrap="wrap">
@@ -86,7 +66,7 @@ function ChangePassword(): JSX.Element {
           </MDBox>
           <MDBox ml="auto">
             <MDButton variant="gradient" color="dark" size="small">
-              update password
+              Actualizar contraseña
             </MDButton>
           </MDBox>
         </MDBox>

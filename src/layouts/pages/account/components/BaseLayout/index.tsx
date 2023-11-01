@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 PRO React TS - v1.0.2
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-2-pro-react-ts
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useState, useEffect, ReactNode } from "react";
 
 // @mui material components
@@ -66,22 +51,8 @@ function BaseLayout({ stickyNavbar, children }: Props): JSX.Element {
 
   return (
     <DashboardLayout>
-      <DashboardNavbar absolute={!stickyNavbar} isMini />
-      <MDBox mt={stickyNavbar ? 3 : 10}>
-        <Grid container>
-          <Grid item xs={12} sm={8} lg={4}>
-            <AppBar position="static">
-              <Tabs orientation={tabsOrientation} value={tabValue} onChange={handleSetTabValue}>
-                <Tab label="Messages" />
-                <Tab label="Social" />
-                <Tab label="Notifications" />
-                <Tab label="Backup" />
-              </Tabs>
-            </AppBar>
-          </Grid>
-        </Grid>
-        {children}
-      </MDBox>
+      <DashboardNavbar absolute={!stickyNavbar} />
+      <MDBox mt={stickyNavbar ? 3 : 10}>{children}</MDBox>
       <Footer />
     </DashboardLayout>
   );

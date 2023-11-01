@@ -1,7 +1,10 @@
 import { useEffect, useState, ReactNode } from "react";
 
 // react-router-dom components
-import { useLocation, NavLink } from "react-router-dom";
+import { useLocation, NavLink, useNavigate } from "react-router-dom";
+import kataliticaBG from "./KATALITICA_LOGO_ALTER.png";
+import truckLogo from "./small_Katalitica_logo_Truck.png";
+import logoCliente from "./logo_Cliente.jpeg";
 
 // @mui material components
 import List from "@mui/material/List";
@@ -29,6 +32,8 @@ import {
   setTransparentSidenav,
   setWhiteSidenav,
 } from "context";
+import MDButton from "components/MDButton";
+import { useAuthStore } from "Store_Auth";
 
 // Declaring props types for Sidenav
 interface Props {
@@ -173,6 +178,12 @@ function Sidenav({ color, brand, brandName, routes, ...rest }: Props): JSX.Eleme
       return <SidenavList key={key}>{returnValue}</SidenavList>;
     });
 
+  const navigate = useNavigate();
+  const logout = useAuthStore((state) => state.logout);
+
+  const handleLogout = () => {
+    logout();
+  };
   // Render all the routes from the routes.js (All the visible items on the Sidenav)
   const renderRoutes = routes.map(
     ({ type, name, icon, title, collapse, noCollapse, key, href, route }: any) => {
@@ -277,7 +288,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }: Props): JSX.Eleme
           </MDTypography>
         </MDBox>
         <MDBox component={NavLink} to="/" display="flex" alignItems="center">
-          {brand && <MDBox component="img" src={"../KATALITICA_LOGO_ALTER.png"} width="10rem" />}
+          {brand && <MDBox component="img" src={logoCliente} width="10rem" />}
           <MDBox
             width={!brandName && "100%"}
             sx={(theme: any) => sidenavLogoLabel(theme, { miniSidenav })}
@@ -295,6 +306,18 @@ function Sidenav({ color, brand, brandName, routes, ...rest }: Props): JSX.Eleme
         }
       />
       <List>{renderRoutes}</List>
+      <MDBox
+        paddingBottom={"20px"}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        width="100%"
+        mt={2}
+      >
+        <MDButton color="dark" size="small" onClick={handleLogout}>
+          Cerrar Sesión
+        </MDButton>
+      </MDBox>
     </SidenavRoot>
   );
 }

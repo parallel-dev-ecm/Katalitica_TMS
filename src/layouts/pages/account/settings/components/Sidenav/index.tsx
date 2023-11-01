@@ -21,6 +21,7 @@ import { Theme } from "@mui/material/styles";
 // Material Dashboard 2 PRO React TS components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import TruckScene from "components/Three-Fiber/TruckScene";
 
 // Material Dashboard 2 PRO React context
 import { useMaterialUIController } from "context";
@@ -30,14 +31,8 @@ function Sidenav(): JSX.Element {
   const { darkMode } = controller;
 
   const sidenavItems = [
-    { icon: "person", label: "profile", href: "profile" },
-    { icon: "receipt_long", label: "basic info", href: "basic-info" },
-    { icon: "lock", label: "change password", href: "change-password" },
-    { icon: "security", label: "2FA", href: "2fa" },
-    { icon: "badge", label: "accounts", href: "accounts" },
-    { icon: "campaign", label: "notifications", href: "notifications" },
-    { icon: "settings_applications", label: "sessions", href: "sessions" },
-    { icon: "delete", label: "delete account", href: "delete-account" },
+    { icon: "person", label: "Compañia", href: "profile" },
+    { icon: "receipt_long", label: "Información general", href: "basic-info" },
   ];
 
   const renderSidenavItems = sidenavItems.map(({ icon, label, href }, key) => {
@@ -97,6 +92,17 @@ function Sidenav(): JSX.Element {
         sx={{ listStyle: "none" }}
       >
         {renderSidenavItems}
+      </MDBox>
+      <MDBox
+        component="ul"
+        display="flex"
+        style={{ height: "200px" }}
+        flexDirection="column"
+        p={2}
+        m={0}
+        sx={{ listStyle: "none" }}
+      >
+        <TruckScene />
       </MDBox>
     </Card>
   );

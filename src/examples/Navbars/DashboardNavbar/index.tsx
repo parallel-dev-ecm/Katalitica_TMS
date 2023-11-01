@@ -36,6 +36,8 @@ import {
   setMiniSidenav,
   setOpenConfigurator,
 } from "context";
+import { useAuthStore } from "Store_Auth";
+import MDTypography from "components/MDTypography";
 
 // Declaring prop types for DashboardNavbar
 interface Props {
@@ -52,6 +54,7 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } = controller;
   const [openMenu, setOpenMenu] = useState<any>(false);
   const route = useLocation().pathname.split("/").slice(1);
+  const userName = sessionStorage.getItem("userName");
 
   useEffect(() => {
     // Setting the navbar type
@@ -140,12 +143,8 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
         {isMini ? null : (
           <MDBox sx={(theme) => navbarRow(theme, { isMini })}>
             <MDBox pr={1}></MDBox>
-            <MDBox color={light ? "white" : "inherit"}>
-              <Link to="/authentication/sign-in/basic">
-                <IconButton sx={navbarIconButton} size="small" disableRipple>
-                  <Icon sx={iconsStyle}>account_circle</Icon>
-                </IconButton>
-              </Link>
+
+            <MDBox display="flex" alignItems="center" color={light ? "white" : "inherit"}>
               <IconButton
                 size="small"
                 disableRipple
@@ -157,6 +156,9 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
                   {miniSidenav ? "menu_open" : "menu"}
                 </Icon>
               </IconButton>
+              <MDTypography fontWeight="light" textTransform={"uppercase"} fontSize={12}>
+                {userName}
+              </MDTypography>
               <IconButton
                 size="small"
                 disableRipple
@@ -171,12 +173,7 @@ function DashboardNavbar({ absolute, light, isMini }: Props): JSX.Element {
                 color="inherit"
                 sx={navbarIconButton}
                 onClick={handleOpenMenu}
-              >
-                {/* <MDBadge badgeContent={9} color="error" size="xs" circular>
-                  <Icon sx={iconsStyle}>notifications</Icon>
-                </MDBadge> */}
-              </IconButton>
-              {/* {renderMenu()} */}
+              ></IconButton>
             </MDBox>
           </MDBox>
         )}

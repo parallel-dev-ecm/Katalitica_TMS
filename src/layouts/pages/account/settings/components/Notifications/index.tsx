@@ -1,19 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 PRO React TS - v1.0.2
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-2-pro-react-ts
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// @mui material components
 import Card from "@mui/material/Card";
 import Table from "@mui/material/Table";
 import TableRow from "@mui/material/TableRow";
@@ -26,17 +10,29 @@ import MDTypography from "components/MDTypography";
 
 // Setting pages components
 import TableCell from "layouts/pages/account/settings/components/TableCell";
+import { Checkbox } from "@mui/material";
+import { useUsersStore } from "Store_Users";
+import { useEffect } from "react";
 
 function Notifications(): JSX.Element {
+  const fetchUserApi = useUsersStore((state) => state.getUsers);
+  const allUsers = useUsersStore((state) => state.allUsers);
+
+  useEffect(() => {
+    fetchUserApi();
+  }, []);
+  useEffect(() => {
+    //console.log(allUsers);
+  }, [allUsers]);
+
   return (
     <Card id="notifications">
       <MDBox p={3} lineHeight={1}>
         <MDBox mb={1}>
-          <MDTypography variant="h5">Notifications</MDTypography>
+          <MDTypography variant="h5">Seguridad del sistema</MDTypography>
         </MDBox>
         <MDTypography variant="button" color="text">
-          Choose how you receive notifications. These notification settings apply to the things
-          you’re watching.
+          Revisa como estan asignados los permisos del sistema.
         </MDTypography>
       </MDBox>
       <MDBox pb={3} px={3}>
@@ -45,99 +41,106 @@ function Notifications(): JSX.Element {
             <MDBox component="thead">
               <TableRow>
                 <TableCell width="100%" padding={[1.5, 3, 1.5, 0.5]}>
-                  Activity
+                  Usuario
                 </TableCell>
                 <TableCell align="center" padding={[1.5, 6, 1.5, 6]}>
-                  Email
+                  Lectura Generales
                 </TableCell>
                 <TableCell align="center" padding={[1.5, 6, 1.5, 6]}>
-                  Push
+                  Escritura Generales
                 </TableCell>
                 <TableCell align="center" padding={[1.5, 6, 1.5, 6]}>
-                  SMS
+                  Lectura Equipos de T.
+                </TableCell>
+                <TableCell align="center" padding={[1.5, 6, 1.5, 6]}>
+                  Escritura Equipos de T.
+                </TableCell>
+                <TableCell align="center" padding={[1.5, 6, 1.5, 6]}>
+                  Lectura RH
+                </TableCell>
+                <TableCell align="center" padding={[1.5, 6, 1.5, 6]}>
+                  Escritura RH
+                </TableCell>
+                <TableCell align="center" padding={[1.5, 6, 1.5, 6]}>
+                  Lectura Gestión C.
+                </TableCell>
+                <TableCell align="center" padding={[1.5, 6, 1.5, 6]}>
+                  Escritura Gestión.
+                </TableCell>
+                <TableCell align="center" padding={[1.5, 6, 1.5, 6]}>
+                  Lectura Mantenimiento de E.T
+                </TableCell>
+                <TableCell align="center" padding={[1.5, 6, 1.5, 6]}>
+                  Escritura Mantenimiento de E.T.
+                </TableCell>
+                <TableCell align="center" padding={[1.5, 6, 1.5, 6]}>
+                  Lectura Inventario de R.
+                </TableCell>
+                <TableCell align="center" padding={[1.5, 6, 1.5, 6]}>
+                  Escritura Inventario de R.
+                </TableCell>
+                <TableCell align="center" padding={[1.5, 6, 1.5, 6]}>
+                  Lectura Logistica.
+                </TableCell>
+                <TableCell align="center" padding={[1.5, 6, 1.5, 6]}>
+                  Escritura Logistica.
                 </TableCell>
               </TableRow>
             </MDBox>
             <TableBody>
-              <TableRow>
-                <TableCell padding={[1, 1, 1, 0.5]}>
-                  <MDBox lineHeight={1.4}>
-                    <MDTypography display="block" variant="button" fontWeight="regular">
-                      Mentions
-                    </MDTypography>
-                    <MDTypography variant="caption" color="text" fontWeight="regular">
-                      Notify when another user mentions you in a comment
-                    </MDTypography>
-                  </MDBox>
-                </TableCell>
-                <TableCell align="center" padding={[1, 1, 1, 0.5]}>
-                  <Switch defaultChecked />
-                </TableCell>
-                <TableCell align="center" padding={[1, 1, 1, 0.5]}>
-                  <Switch />
-                </TableCell>
-                <TableCell align="center" padding={[1, 1, 1, 0.5]}>
-                  <Switch />
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell padding={[1, 1, 1, 0.5]}>
-                  <MDBox lineHeight={1.4}>
-                    <MDTypography display="block" variant="button" fontWeight="regular">
-                      Comments
-                    </MDTypography>
-                    <MDTypography variant="caption" color="text" fontWeight="regular">
-                      Notify when another user comments your item.
-                    </MDTypography>
-                  </MDBox>
-                </TableCell>
-                <TableCell align="center" padding={[1, 1, 1, 0.5]}>
-                  <Switch defaultChecked />
-                </TableCell>
-                <TableCell align="center" padding={[1, 1, 1, 0.5]}>
-                  <Switch defaultChecked />
-                </TableCell>
-                <TableCell align="center" padding={[1, 1, 1, 0.5]}>
-                  <Switch />
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell padding={[1, 1, 1, 0.5]}>
-                  <MDBox lineHeight={1.4}>
-                    <MDTypography display="block" variant="button" fontWeight="regular">
-                      Follows
-                    </MDTypography>
-                    <MDTypography variant="caption" color="text" fontWeight="regular">
-                      Notify when another user follows you.
-                    </MDTypography>
-                  </MDBox>
-                </TableCell>
-                <TableCell align="center" padding={[1, 1, 1, 0.5]}>
-                  <Switch />
-                </TableCell>
-                <TableCell align="center" padding={[1, 1, 1, 0.5]}>
-                  <Switch defaultChecked />
-                </TableCell>
-                <TableCell align="center" padding={[1, 1, 1, 0.5]}>
-                  <Switch />
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell padding={[1, 1, 1, 0.5]} noBorder>
-                  <MDTypography display="block" variant="button" color="text">
-                    Log in from a new device
-                  </MDTypography>
-                </TableCell>
-                <TableCell align="center" padding={[1, 1, 1, 0.5]} noBorder>
-                  <Switch defaultChecked />
-                </TableCell>
-                <TableCell align="center" padding={[1, 1, 1, 0.5]} noBorder>
-                  <Switch defaultChecked />
-                </TableCell>
-                <TableCell align="center" padding={[1, 1, 1, 0.5]} noBorder>
-                  <Switch defaultChecked />
-                </TableCell>
-              </TableRow>
+              {allUsers.map((user) => (
+                <TableRow key={user.id}>
+                  <TableCell padding={[1, 1, 1, 0.5]}>
+                    <MDBox lineHeight={1.4}>
+                      <MDTypography display="block" variant="button" fontWeight="regular">
+                        {user.name}
+                      </MDTypography>
+                    </MDBox>
+                  </TableCell>
+                  <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                    <Checkbox disabled defaultChecked={user.readGenerales} />
+                  </TableCell>
+                  <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                    <Checkbox disabled defaultChecked={user.editGenerales} />
+                  </TableCell>
+                  <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                    <Checkbox disabled defaultChecked={user.readET} />
+                  </TableCell>
+                  <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                    <Checkbox disabled defaultChecked={user.editTransporte} />
+                  </TableCell>
+                  <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                    <Checkbox disabled defaultChecked={user.readRH} />
+                  </TableCell>
+                  <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                    <Checkbox disabled defaultChecked={user.editRh} />
+                  </TableCell>
+                  <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                    <Checkbox disabled defaultChecked={user.readGestionC} />
+                  </TableCell>
+                  <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                    <Checkbox disabled defaultChecked={user.editCombustibles} />
+                  </TableCell>
+                  <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                    <Checkbox disabled defaultChecked={user.readMantenimientoET} />
+                  </TableCell>
+                  <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                    <Checkbox disabled defaultChecked={user.editMantenimientoEt} />
+                  </TableCell>
+                  <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                    <Checkbox disabled defaultChecked={user.readInvRefacciones} />
+                  </TableCell>
+                  <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                    <Checkbox disabled defaultChecked={user.editRefacciones} />
+                  </TableCell>
+                  <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                    <Checkbox disabled defaultChecked={user.readLogistics} />
+                  </TableCell>
+                  <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                    <Checkbox disabled defaultChecked={user.editLogistica} />
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </MDBox>

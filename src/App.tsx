@@ -38,11 +38,16 @@ import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "co
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 import { enableMapSet } from "immer";
+import Cover from "components/Auth/SignIn";
+import { useAuthStore } from "Store_Auth";
+import { currentCompanyStore } from "Store_Company";
+import PrivateRoute from "components/ProtectedRoute";
 
 enableMapSet();
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
+
   const {
     miniSidenav,
     direction,
@@ -162,8 +167,9 @@ export default function App() {
         )}
         {layout === "vr" && <Configurator />}
         <Routes>
-          {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/dashboards/analytics" />} />
+          <Route path="/authentication/sign-in/cover" element={<Cover />} />
+          <Route element={<PrivateRoute />}>{getRoutes(routes)}</Route>
+          <Route path="*" element={<Navigate to="/Generales/Empresa" />} />
         </Routes>
       </ThemeProvider>
     </CacheProvider>
@@ -186,8 +192,11 @@ export default function App() {
       )}
       {layout === "vr" && <Configurator />}
       <Routes>
-        {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/dashboards/analytics" />} />
+        <Route path="/authentication/sign-in/cover" element={<Cover />} />
+
+        <Route element={<PrivateRoute />}>{getRoutes(routes)}</Route>
+        {/* Change line below */}
+        <Route path="*" element={<Navigate to="/Generales/Empresa" />} />
       </Routes>
     </ThemeProvider>
   );

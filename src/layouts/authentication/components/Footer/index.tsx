@@ -55,7 +55,7 @@ function Footer({ light }: { light?: boolean }): JSX.Element {
               </Icon>
             </MDBox>
             by
-            <Link href="https://www.creative-tim.com/" target="_blank">
+            <Link href="/" target="_blank">
               <MDTypography variant="button" fontWeight="medium" color={light ? "white" : "dark"}>
                 &nbsp;Creative Tim&nbsp;
               </MDTypography>
@@ -80,7 +80,7 @@ function Footer({ light }: { light?: boolean }): JSX.Element {
             })}
           >
             <MDBox component="li" pr={2} lineHeight={1}>
-              <Link href="https://www.creative-tim.com/" target="_blank">
+              <Link href="/" target="_blank">
                 <MDTypography
                   variant="button"
                   fontWeight="regular"
@@ -102,7 +102,7 @@ function Footer({ light }: { light?: boolean }): JSX.Element {
               </Link>
             </MDBox>
             <MDBox component="li" px={2} lineHeight={1}>
-              <Link href="https://www.creative-tim.com/blog" target="_blank">
+              <Link href="/" target="_blank">
                 <MDTypography
                   variant="button"
                   fontWeight="regular"
@@ -113,7 +113,7 @@ function Footer({ light }: { light?: boolean }): JSX.Element {
               </Link>
             </MDBox>
             <MDBox component="li" pl={2} lineHeight={1}>
-              <Link href="https://www.creative-tim.com/license" target="_blank">
+              <Link href="/" target="_blank">
                 <MDTypography
                   variant="button"
                   fontWeight="regular"

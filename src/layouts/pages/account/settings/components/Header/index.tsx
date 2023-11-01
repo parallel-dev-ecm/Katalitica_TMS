@@ -1,24 +1,10 @@
-/**
-=========================================================
-* Material Dashboard 2 PRO React TS - v1.0.2
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-2-pro-react-ts
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // @mui material components
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Switch from "@mui/material/Switch";
+import { User } from "Store_Users";
 
 // Material Dashboard 2 PRO React TS components
 import MDBox from "components/MDBox";
@@ -27,11 +13,27 @@ import MDAvatar from "components/MDAvatar";
 
 // Images
 import burceMars from "assets/images/bruce-mars.jpg";
+import { useUsersStore } from "Store_Users";
 
 function Header(): JSX.Element {
-  const [visible, setVisible] = useState<boolean>(true);
-
-  const handleSetVisible = () => setVisible(!visible);
+  const userName = sessionStorage.getItem("userName");
+  const fetchUserApi = useUsersStore((state) => state.getUsers);
+  const allUsers = useUsersStore((state) => state.allUsers);
+  const [currentUser, setCurrentUser] = useState<User>();
+  useEffect(() => {
+    fetchUserApi();
+  }, []);
+  useEffect(() => {
+    // Get username from sessionStorage
+    const storedUsername = sessionStorage.getItem("userName");
+    const user = allUsers.find((u) => u.username === storedUsername);
+    if (user) {
+      setCurrentUser(user);
+      console.log(user);
+    } else {
+      console.log("User not found");
+    }
+  }, [allUsers]);
 
   return (
     <Card id="profile">
@@ -43,10 +45,10 @@ function Header(): JSX.Element {
           <Grid item>
             <MDBox height="100%" mt={0.5} lineHeight={1}>
               <MDTypography variant="h5" fontWeight="medium">
-                Alex Thompson
+                {userName.toUpperCase()}
               </MDTypography>
               <MDTypography variant="button" color="text" fontWeight="medium">
-                CEO / Co-Founder
+                {currentUser ? currentUser.role : "Gerente General"}
               </MDTypography>
             </MDBox>
           </Grid>
@@ -56,14 +58,7 @@ function Header(): JSX.Element {
               justifyContent={{ md: "flex-end" }}
               alignItems="center"
               lineHeight={1}
-            >
-              <MDTypography variant="caption" fontWeight="regular">
-                Switch to {visible ? "invisible" : "visible"}
-              </MDTypography>
-              <MDBox ml={1}>
-                <Switch checked={visible} onChange={handleSetVisible} />
-              </MDBox>
-            </MDBox>
+            ></MDBox>
           </Grid>
         </Grid>
       </MDBox>

@@ -1,28 +1,14 @@
-/**
-=========================================================
-* Material Dashboard 2 PRO React TS - v1.0.2
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-2-pro-react-ts
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 // @mui material components
 import Link from "@mui/material/Link";
 import Icon from "@mui/material/Icon";
-
+import truckLogo from "./KataliticaLogo_Truck.png";
 // Material Dashboard 2 PRO React TS components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 // Material Dashboard 2 PRO React TS Base Styles
 import typography from "assets/theme/base/typography";
+import { Image } from "@mui/icons-material";
 
 // Declaring props types for Footer
 interface Props {
@@ -70,21 +56,15 @@ function Footer({ company, links }: Props): JSX.Element {
         fontSize={size.sm}
         px={1.5}
       >
-        &copy; {new Date().getFullYear()}, made with
+        &copy; {new Date().getFullYear()}, Hecho por
+        <MDTypography variant="button" fontWeight="medium">
+          &nbsp;{name}&nbsp;
+        </MDTypography>
         <MDBox fontSize={size.md} color="text" mb={-0.5} mx={0.25}>
-          <Icon color="inherit" fontSize="inherit">
-            favorite
-          </Icon>
+          <LocalShippingIcon />
         </MDBox>
-        by
-        <Link href={href} target="_blank">
-          <MDTypography variant="button" fontWeight="medium">
-            &nbsp;{name}&nbsp;
-          </MDTypography>
-        </Link>
-        for a better web.
       </MDBox>
-      <MDBox
+      {/* <MDBox
         component="ul"
         sx={({ breakpoints }) => ({
           display: "flex",
@@ -101,21 +81,20 @@ function Footer({ company, links }: Props): JSX.Element {
           },
         })}
       >
-        {renderLinks()}
-      </MDBox>
+        <MDBox component="img" onClick={() => {}} src={truckLogo} width="5rem" /> {renderLinks()}
+      </MDBox> */}
     </MDBox>
   );
 }
 
 // Declaring default props for Footer
 Footer.defaultProps = {
-  company: { href: "https://www.creative-tim.com/", name: "Creative Tim" },
-  links: [
-    { href: "https://www.creative-tim.com/", name: "Creative Tim" },
-    { href: "https://www.creative-tim.com/presentation", name: "About Us" },
-    { href: "https://www.creative-tim.com/blog", name: "Blog" },
-    { href: "https://www.creative-tim.com/license", name: "License" },
-  ],
+  company: { href: "/", name: "Katalitica-TMS" },
+  // links: [
+  //   { href: "/", name: "About Us" },
+  //   { href: "/", name: "Blog" },
+  //   { href: "/", name: "License" },
+  // ],
 };
 
 export default Footer;

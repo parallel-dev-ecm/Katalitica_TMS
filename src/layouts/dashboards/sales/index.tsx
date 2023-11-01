@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 PRO React TS - v1.0.2
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-2-pro-react-ts
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useState } from "react";
 
 // @mui material components
@@ -86,9 +71,9 @@ function Sales(): JSX.Element {
       keepMounted
       disableAutoFocusItem
     >
-      <MenuItem onClick={close}>Last 7 days</MenuItem>
-      <MenuItem onClick={close}>Last week</MenuItem>
-      <MenuItem onClick={close}>Last 30 days</MenuItem>
+      <MenuItem onClick={close}>Ultimos 7 dias</MenuItem>
+      <MenuItem onClick={close}>La semana pasada</MenuItem>
+      <MenuItem onClick={close}>Ultimos 30 dias</MenuItem>
     </Menu>
   );
 
@@ -100,12 +85,12 @@ function Sales(): JSX.Element {
           <Grid container spacing={3}>
             <Grid item xs={12} sm={4}>
               <DefaultStatisticsCard
-                title="sales"
+                title="ventas"
                 count="$230,220"
                 percentage={{
                   color: "success",
                   value: "+55%",
-                  label: "since last month",
+                  label: "desde el ultimo mes",
                 }}
                 dropdown={{
                   action: openSalesDropdown,
@@ -116,12 +101,12 @@ function Sales(): JSX.Element {
             </Grid>
             <Grid item xs={12} sm={4}>
               <DefaultStatisticsCard
-                title="customers"
+                title="clientes"
                 count="3.200"
                 percentage={{
                   color: "success",
                   value: "+12%",
-                  label: "since last month",
+                  label: "desde el ultimo mes",
                 }}
                 dropdown={{
                   action: openCustomersDropdown,
@@ -132,12 +117,12 @@ function Sales(): JSX.Element {
             </Grid>
             <Grid item xs={12} sm={4}>
               <DefaultStatisticsCard
-                title="avg. revenue"
+                title="Ganancias promedio."
                 count="$1.200"
                 percentage={{
                   color: "secondary",
                   value: "+$213",
-                  label: "since last month",
+                  label: "Desde el ultimo mes",
                 }}
                 dropdown={{
                   action: openRevenueDropdown,
@@ -197,7 +182,7 @@ function Sales(): JSX.Element {
             <Card>
               <MDBox pt={3} px={3}>
                 <MDTypography variant="h6" fontWeight="medium">
-                  Top Selling Products
+                  Mejores transportistas.
                 </MDTypography>
               </MDBox>
               <MDBox py={1}>
