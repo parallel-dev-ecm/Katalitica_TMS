@@ -4,6 +4,7 @@ import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Autocomplete from "@mui/material/Autocomplete";
 import { gsap } from "gsap";
+import { User, useUsersStore } from "Store_Users";
 
 // Material Dashboard 2 PRO React TS components
 import MDBox from "components/MDBox";
@@ -24,9 +25,7 @@ import { Alert } from "@mui/material";
 
 function BasicInfo(): JSX.Element {
   const userStore = currentUserStore((state) => state);
-  const getUser = useAuthStore((state) => state.currentUser);
 
-  const currentUser = userStore.readCurrentUser();
   const [disabled, setDisabled] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -50,12 +49,21 @@ function BasicInfo(): JSX.Element {
   const formRef = useRef();
   const tl = gsap.timeline();
 
+  const allUsers = useUsersStore((state) => state.allUsers);
+  const [currentUser, setCurrentUser] = useState<User>();
+  const [authorizedToRead, SetAuthorizedToRead] = useState<boolean>(false);
+  const [authorizedToWrite, SetAuthorizedToWrite] = useState<boolean>(false);
+  const updateCompanyStore = currentCompanyStore((state) => state.updateCompanyById);
+
+  const getUser = useAuthStore((state) => state.currentUser);
+  const fetchUserApi = useUsersStore((state) => state.getUsers);
+
   const handleChange =
     (setStateFunc: React.Dispatch<React.SetStateAction<string>>) =>
     (e: ChangeEvent<HTMLInputElement>) => {
       setStateFunc(e.target.value);
     };
-  const updateCompanyStore = currentCompanyStore((state) => state.updateCompanyById);
+
   const handleSaveChanges = async () => {
     const company: Company = {
       id: 1,
@@ -83,6 +91,7 @@ function BasicInfo(): JSX.Element {
       console.log("error");
     }
   };
+
   useEffect(() => {
     async function fetchCompanyDetails() {
       const company = await getCompanyDetails("1");
@@ -104,6 +113,25 @@ function BasicInfo(): JSX.Element {
 
     fetchCompanyDetails();
   }, []);
+
+  useEffect(() => {
+    fetchUserApi();
+  }, []);
+  useEffect(() => {
+    // Get username from sessionStorage
+    const storedUsername = sessionStorage.getItem("userName");
+
+    const user = allUsers.find((u) => u.username === storedUsername);
+
+    if (user) {
+      setCurrentUser(user);
+      SetAuthorizedToRead(user.readGenerales);
+      SetAuthorizedToWrite(user.editGenerales);
+      console.log(user.editGenerales);
+    } else {
+      console.log("User not found");
+    }
+  }, [allUsers]);
 
   useLayoutEffect(() => {
     if (!loading) {
@@ -129,140 +157,151 @@ function BasicInfo(): JSX.Element {
           <MDBox p={3} ref={mainTitle}>
             <MDTypography variant="h5">Información de la compañia</MDTypography>
           </MDBox>
-          <MDBox component="form" pb={3} px={3} ref={formRef}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
-                <FormField
-                  variant="outlined"
-                  disabled={disabled}
-                  label="Clave compañia"
-                  placeholder={claveCompania}
-                  onChange={handleChange(setClaveCompania)}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <FormField
-                  disabled={disabled}
-                  variant="outlined"
-                  label="RFC"
-                  placeholder={rfc}
-                  onChange={handleChange(setRFC)}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <FormField
-                  disabled={disabled}
-                  variant="outlined"
-                  label="Razon Social"
-                  placeholder={razon_social}
-                  onChange={handleChange(setRazonSocial)}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <FormField
-                  disabled={disabled}
-                  variant="outlined"
-                  label="Nombre Corto"
-                  placeholder={nombreCorto}
-                  onChange={handleChange(setNombreCorto)}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <FormField
-                  disabled={disabled}
-                  variant="outlined"
-                  label="Nombre Largo"
-                  placeholder={nombreLargo}
-                  onChange={handleChange(setNombreLargo)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Grid container spacing={3}>
-                  <Grid item xs={12} sm={6}>
-                    <FormField
-                      disabled={disabled}
-                      variant="outlined"
-                      label="Calle"
-                      placeholder={calle}
-                      onChange={handleChange(setCalle)}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <FormField
-                      disabled={disabled}
-                      variant="outlined"
-                      label="Colonia"
-                      placeholder={colonia}
-                      onChange={handleChange(setColonia)}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Grid container spacing={3}>
-                      <Grid item xs={12} sm={5}>
-                        <Autocomplete
-                          value={estado}
-                          options={mexicanStates}
-                          disabled={disabled}
-                          onChange={(event, newValue) => setEstado(newValue)}
-                          renderInput={(params) => (
-                            <FormField
-                              variant="outlined"
-                              {...params}
-                              label="Estado"
-                              InputLabelProps={{ shrink: true }}
-                            />
-                          )}
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <FormField
-                          variant="outlined"
-                          disabled={disabled}
-                          label="Codigo Postal"
-                          placeholder={codigoPostal}
-                          onChange={handleChange(setCodigoPostal)}
-                        />
+          {authorizedToRead && (
+            <MDBox component="form" pb={3} px={3} ref={formRef}>
+              <Grid container spacing={3}>
+                <Grid item xs={12} sm={6}>
+                  <FormField
+                    variant="outlined"
+                    disabled={disabled}
+                    label="Clave compañia"
+                    placeholder={claveCompania}
+                    onChange={handleChange(setClaveCompania)}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <FormField
+                    disabled={disabled}
+                    variant="outlined"
+                    label="RFC"
+                    placeholder={rfc}
+                    onChange={handleChange(setRFC)}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <FormField
+                    disabled={disabled}
+                    variant="outlined"
+                    label="Razon Social"
+                    placeholder={razon_social}
+                    onChange={handleChange(setRazonSocial)}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <FormField
+                    disabled={disabled}
+                    variant="outlined"
+                    label="Nombre Corto"
+                    placeholder={nombreCorto}
+                    onChange={handleChange(setNombreCorto)}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <FormField
+                    disabled={disabled}
+                    variant="outlined"
+                    label="Nombre Largo"
+                    placeholder={nombreLargo}
+                    onChange={handleChange(setNombreLargo)}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Grid container spacing={3}>
+                    <Grid item xs={12} sm={6}>
+                      <FormField
+                        disabled={disabled}
+                        variant="outlined"
+                        label="Calle"
+                        placeholder={calle}
+                        onChange={handleChange(setCalle)}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <FormField
+                        disabled={disabled}
+                        variant="outlined"
+                        label="Colonia"
+                        placeholder={colonia}
+                        onChange={handleChange(setColonia)}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <Grid container spacing={3}>
+                        <Grid item xs={12} sm={5}>
+                          <Autocomplete
+                            value={estado}
+                            options={mexicanStates}
+                            disabled={disabled}
+                            onChange={(event, newValue) => setEstado(newValue)}
+                            renderInput={(params) => (
+                              <FormField
+                                variant="outlined"
+                                {...params}
+                                label="Estado"
+                                InputLabelProps={{ shrink: true }}
+                              />
+                            )}
+                          />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <FormField
+                            variant="outlined"
+                            disabled={disabled}
+                            label="Codigo Postal"
+                            placeholder={codigoPostal}
+                            onChange={handleChange(setCodigoPostal)}
+                          />
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <FormField
-                  variant="outlined"
-                  disabled={disabled}
-                  label="Contacto Persona"
-                  placeholder={contactoPersona}
-                  onChange={handleChange(setContactoPersona)}
-                />
-              </Grid>
+                <Grid item xs={12} sm={6}>
+                  <FormField
+                    variant="outlined"
+                    disabled={disabled}
+                    label="Contacto Persona"
+                    placeholder={contactoPersona}
+                    onChange={handleChange(setContactoPersona)}
+                  />
+                </Grid>
 
-              <Grid item xs={12} sm={6}>
-                <FormField
-                  label="Numero de Telefono"
-                  variant="outlined"
-                  disabled={disabled}
-                  placeholder={telefono}
-                  onChange={handleChange(setTelefono)}
-                  inputProps={{ type: "number" }}
-                />
+                <Grid item xs={12} sm={6}>
+                  <FormField
+                    label="Numero de Telefono"
+                    variant="outlined"
+                    disabled={disabled}
+                    placeholder={telefono}
+                    onChange={handleChange(setTelefono)}
+                    inputProps={{ type: "number" }}
+                  />
+                </Grid>
+                {
+                  <Grid item xs={12} sm={6}>
+                    <MDBox display="flex" justifyContent="flex-end">
+                      <MDButton
+                        disabled={!authorizedToWrite}
+                        variant="gradient"
+                        color="dark"
+                        onClick={handleSaveChanges}
+                      >
+                        Guardar Cambios
+                      </MDButton>
+                    </MDBox>
+                  </Grid>
+                }
+
+                <Grid item xs={12} sm={12}>
+                  <MDBox display="flex">
+                    {showSuccessAlert && (
+                      <Alert severity="success">Compañia actualizada exitosamente.</Alert>
+                    )}
+                  </MDBox>
+                </Grid>
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <MDBox display="flex" justifyContent="flex-end">
-                  <MDButton variant="gradient" color="dark" onClick={handleSaveChanges}>
-                    Guardar Cambios
-                  </MDButton>
-                </MDBox>
-              </Grid>
-              <Grid item xs={12} sm={12}>
-                <MDBox display="flex">
-                  {showSuccessAlert && (
-                    <Alert severity="success">Company updated successfully!</Alert>
-                  )}
-                </MDBox>
-              </Grid>
-            </Grid>
-          </MDBox>
+            </MDBox>
+          )}
+          {!authorizedToRead && <Alert severity="error">Sin permisos.</Alert>}
         </>
       }
     </Card>

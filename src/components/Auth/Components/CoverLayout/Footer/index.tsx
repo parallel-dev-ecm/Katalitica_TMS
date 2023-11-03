@@ -89,7 +89,7 @@ function Footer({ light }: { light?: boolean }): JSX.Element {
             <MDBox component="li" pr={2} lineHeight={1}>
               <MDBox component="img" onClick={() => {}} src={truckLogo} width="5rem" />
             </MDBox>
-            <MDBox component="li" px={2} lineHeight={1}>
+            {/* <MDBox component="li" px={2} lineHeight={1}>
               <Link href="/" target="_blank">
                 <MDTypography
                   variant="button"
@@ -121,7 +121,7 @@ function Footer({ light }: { light?: boolean }): JSX.Element {
                   Contacto
                 </MDTypography>
               </Link>
-            </MDBox>
+            </MDBox> */}
           </MDBox>
         </MDBox>
       </Container>

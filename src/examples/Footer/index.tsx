@@ -64,7 +64,7 @@ function Footer({ company, links }: Props): JSX.Element {
           <LocalShippingIcon />
         </MDBox>
       </MDBox>
-      {/* <MDBox
+      <MDBox
         component="ul"
         sx={({ breakpoints }) => ({
           display: "flex",
@@ -81,8 +81,8 @@ function Footer({ company, links }: Props): JSX.Element {
           },
         })}
       >
-        <MDBox component="img" onClick={() => {}} src={truckLogo} width="5rem" /> {renderLinks()}
-      </MDBox> */}
+        <MDBox component="img" onClick={() => {}} src={truckLogo} width="5rem" />
+      </MDBox>
     </MDBox>
   );
 }

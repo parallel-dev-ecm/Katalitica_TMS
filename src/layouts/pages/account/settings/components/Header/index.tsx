@@ -29,7 +29,6 @@ function Header(): JSX.Element {
     const user = allUsers.find((u) => u.username === storedUsername);
     if (user) {
       setCurrentUser(user);
-      console.log(user);
     } else {
       console.log("User not found");
     }

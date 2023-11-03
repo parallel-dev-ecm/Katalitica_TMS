@@ -7,6 +7,9 @@ import { CentroCostos, useCCstore } from "Store_CentroCostos";
 import DataTable from "examples/Tables/DataTable";
 import { table } from "console";
 import { useNavigate } from "react-router";
+import { useAuthStore } from "Store_Auth";
+import { useUsersStore, User } from "Store_Users";
+import Unauthorized from "components/Resources/Unauthorized";
 
 function ListCentroCostos(): JSX.Element {
   const columns = [
@@ -22,6 +25,12 @@ function ListCentroCostos(): JSX.Element {
     { Header: "Estado", accessor: "estado" },
     { Header: "Teléfono", accessor: "telefono" },
   ];
+  const fetchUserApi = useUsersStore((state) => state.getUsers);
+  const allUsers = useUsersStore((state) => state.allUsers);
+  const [currentUser, setCurrentUser] = useState<User>();
+  const [authorizedToRead, SetAuthorizedToRead] = useState<boolean>(false);
+  const [authorizedToWrite, SetAuthorizedToWrite] = useState<boolean>(false);
+  const getUser = useAuthStore((state) => state.currentUser);
 
   const getAllCC = useCCstore((state) => state.readAllCentroCostos);
   const [tableData, setTableData] = useState<CentroCostos[]>([]); // This will store your fetched data.
@@ -33,14 +42,28 @@ function ListCentroCostos(): JSX.Element {
   }, []);
 
   useEffect(() => {
-    console.log(allCC);
-  }, [allCC]);
+    fetchUserApi();
+  }, []);
+  useEffect(() => {
+    // Get username from sessionStorage
+    const storedUsername = sessionStorage.getItem("userName");
+
+    const user = allUsers.find((u) => u.username === storedUsername);
+
+    if (user) {
+      setCurrentUser(user);
+      SetAuthorizedToRead(user.readGenerales);
+      SetAuthorizedToWrite(user.editGenerales);
+    } else {
+      console.log("User not found");
+    }
+  }, [allUsers]);
+
   const navigate = useNavigate();
 
   const handleAddCentroCostos = async (data: CentroCostos) => {
     const isSuccess = await postCC(data);
     if (isSuccess) {
-      console.log("Successfully added!");
       document.location.reload();
     } else {
       console.log("Failed to add.");
@@ -48,12 +71,13 @@ function ListCentroCostos(): JSX.Element {
   };
 
   return (
-    <div>
-      {
+    <>
+      {authorizedToRead && (
         <DataTableWithModal
           title="Centro de Costos"
           dataTableData={{ rows: allCC, columns: columns }} // Pass the state to the prop.
           description="Información General de los centros de costos"
+          buttonEditable={currentUser.editGenerales}
           modalInputs={[
             { label: "Clave", dbName: "clave", type: "text" },
             { label: "Nombre", dbName: "nombre", type: "text" },
@@ -69,8 +93,9 @@ function ListCentroCostos(): JSX.Element {
           ]}
           onAdd={handleAddCentroCostos}
         />
-      }
-    </div>
+      )}
+      {!authorizedToRead && <Unauthorized />}
+    </>
   );
 }
 

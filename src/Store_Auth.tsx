@@ -37,7 +37,6 @@ const useAuthStore = create<State & Actions>((set, get) => ({
       set({ isAuthenticated: true });
       sessionStorage.setItem("authToken", "true");
       set({ currentUser: response.data });
-      console.log(get().currentUser);
       sessionStorage.setItem("userName", get().currentUser.displayName);
 
       return true;

@@ -30,6 +30,7 @@ interface InputProps {
 
 interface DataTableWithModalProps {
   title: string;
+  buttonEditable?: boolean;
   modalInputs?: InputProps[];
   description: string;
   dataTableData: { columns: any[]; rows: any[] }; // Define a type for your data
@@ -42,6 +43,7 @@ function DataTableWithModal({
   dataTableData,
   modalInputs,
   onAdd,
+  buttonEditable,
 }: DataTableWithModalProps): JSX.Element {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState<Record<string, string>>({}); // Step 1: Create formData state
@@ -81,7 +83,12 @@ function DataTableWithModal({
                 {description}
               </MDTypography>
             </Box>
-            <MDButton variant="gradient" color="dark" onClick={handleOpen}>
+            <MDButton
+              disabled={!buttonEditable}
+              variant="gradient"
+              color="dark"
+              onClick={handleOpen}
+            >
               Añadir nuevo
             </MDButton>
           </MDBox>
@@ -98,13 +105,16 @@ function DataTableWithModal({
       <Footer />
 
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Add New Entry</DialogTitle>
+        <DialogTitle>Añadir nueva entrada</DialogTitle>
         <DialogContent>
           {modalInputs &&
             modalInputs.map((input, index) => (
               <MDInput
                 key={index}
                 margin="dense"
+                inputLabelProps={{
+                  style: { color: "black" },
+                }}
                 inputProps={{
                   style: { color: "black" },
                   value: formData[input.dbName] || "", // Step 3: Pass current value

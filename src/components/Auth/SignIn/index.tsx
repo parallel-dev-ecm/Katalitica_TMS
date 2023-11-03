@@ -113,21 +113,10 @@ function Cover(): JSX.Element {
                 InputLabelProps={{ shrink: true }}
               />
             </MDBox>
-            <MDBox display="flex" alignItems="center" ml={-1}>
-              <Switch checked={rememberMe} onChange={handleSetRememberMe} />
-              <MDTypography
-                variant="button"
-                fontWeight="regular"
-                color="text"
-                onClick={handleSetRememberMe}
-                sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-              >
-                &nbsp;&nbsp;Remember me
-              </MDTypography>
-            </MDBox>
+
             <MDBox mt={4} mb={1}>
               <MDButton onClick={handleLogin} variant="gradient" color="info" fullWidth>
-                sign in
+                Iniciar Sesión
               </MDButton>
             </MDBox>
           </MDBox>

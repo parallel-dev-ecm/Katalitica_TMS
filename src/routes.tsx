@@ -23,7 +23,7 @@
 // Material Dashboard 2 PRO React layouts
 import Analytics from "layouts/dashboards/analytics";
 import Sales from "layouts/dashboards/sales";
-import ProfileOverview from "layouts/pages/profile/company-overview";
+import Overview from "components/Generales/Company";
 import AllProjects from "layouts/pages/profile/all-projects";
 import NewUser from "layouts/pages/users/new-user";
 import Settings from "layouts/pages/account/settings";
@@ -61,7 +61,6 @@ import Icon from "@mui/material/Icon";
 
 import profilePicture from "assets/images/team-3.jpg";
 import MarcasMotores from "components/GestionET/MarcasMotores";
-import Overview from "layouts/pages/profile/company-overview";
 import AñadirCentroCostos from "components/Generales/CentrosCostos/pages/NewCentroCostos/NewCentroCostos";
 import UserSecurity from "components/Generales/UserSecurity";
 import ListCentroCostos from "components/Generales/CentrosCostos";
@@ -79,9 +78,7 @@ import PuestosColaboradores from "components/GestionDeTalento/PuestosDeLosColabo
 import AreasColaboradores from "components/GestionDeTalento/AreasColaboradores";
 import EstacionesServicio from "components/GestionDiesel/EstacionesServicio";
 import Cover from "components/Auth/SignIn";
-// import { useAuthStore } from "Store_Auth";
-// const getUser = useAuthStore((state) => state.currentUser);
-// console.log(getUser);
+
 const currentUser = sessionStorage.getItem("userName");
 
 const routes = [
@@ -95,7 +92,7 @@ const routes = [
         name: "My Profile",
         key: "my-profile",
         //  route: "/pages/profile/profile-overview",
-        component: <ProfileOverview />,
+        //component: <ProfileOverview />,
       },
       {
         name: "Settings",
