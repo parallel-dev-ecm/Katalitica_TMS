@@ -22,6 +22,7 @@ function Notifications(): JSX.Element {
   const [currentUser, setCurrentUser] = useState<User>();
   const [authorizedToRead, SetAuthorizedToRead] = useState<boolean>(false);
   const [authorizedToWrite, SetAuthorizedToWrite] = useState<boolean>(false);
+  const excludedUsernames = ["emilio.admin", "erick.admin", "max.admin", "daniel.admin"]; // Add as many usernames as you want to exclude
 
   const getUser = useAuthStore((state) => state.currentUser);
   useEffect(() => {
@@ -128,59 +129,61 @@ function Notifications(): JSX.Element {
                   </TableRow>
                 </MDBox>
                 <TableBody>
-                  {allUsers.map((user) => (
-                    <TableRow key={user.id}>
-                      <TableCell padding={[1, 1, 1, 0.5]}>
-                        <MDBox lineHeight={1.4}>
-                          <MDTypography display="block" variant="button" fontWeight="regular">
-                            {user.name}
-                          </MDTypography>
-                        </MDBox>
-                      </TableCell>
-                      <TableCell align="center" padding={[1, 1, 1, 0.5]}>
-                        <Checkbox disabled defaultChecked={user.readGenerales} />
-                      </TableCell>
-                      <TableCell align="center" padding={[1, 1, 1, 0.5]}>
-                        <Checkbox disabled defaultChecked={user.editGenerales} />
-                      </TableCell>
-                      <TableCell align="center" padding={[1, 1, 1, 0.5]}>
-                        <Checkbox disabled defaultChecked={user.readET} />
-                      </TableCell>
-                      <TableCell align="center" padding={[1, 1, 1, 0.5]}>
-                        <Checkbox disabled defaultChecked={user.editTransporte} />
-                      </TableCell>
-                      <TableCell align="center" padding={[1, 1, 1, 0.5]}>
-                        <Checkbox disabled defaultChecked={user.readRH} />
-                      </TableCell>
-                      <TableCell align="center" padding={[1, 1, 1, 0.5]}>
-                        <Checkbox disabled defaultChecked={user.editRh} />
-                      </TableCell>
-                      <TableCell align="center" padding={[1, 1, 1, 0.5]}>
-                        <Checkbox disabled defaultChecked={user.readGestionC} />
-                      </TableCell>
-                      <TableCell align="center" padding={[1, 1, 1, 0.5]}>
-                        <Checkbox disabled defaultChecked={user.editCombustibles} />
-                      </TableCell>
-                      <TableCell align="center" padding={[1, 1, 1, 0.5]}>
-                        <Checkbox disabled defaultChecked={user.readMantenimientoET} />
-                      </TableCell>
-                      <TableCell align="center" padding={[1, 1, 1, 0.5]}>
-                        <Checkbox disabled defaultChecked={user.editMantenimientoEt} />
-                      </TableCell>
-                      <TableCell align="center" padding={[1, 1, 1, 0.5]}>
-                        <Checkbox disabled defaultChecked={user.readInvRefacciones} />
-                      </TableCell>
-                      <TableCell align="center" padding={[1, 1, 1, 0.5]}>
-                        <Checkbox disabled defaultChecked={user.editRefacciones} />
-                      </TableCell>
-                      <TableCell align="center" padding={[1, 1, 1, 0.5]}>
-                        <Checkbox disabled defaultChecked={user.readLogistics} />
-                      </TableCell>
-                      <TableCell align="center" padding={[1, 1, 1, 0.5]}>
-                        <Checkbox disabled defaultChecked={user.editLogistica} />
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                  {allUsers
+                    .filter((user) => !excludedUsernames.includes(user.username)) // Exclude users whose usernames are in the excludedUsernames array
+                    .map((user) => (
+                      <TableRow key={user.id}>
+                        <TableCell padding={[1, 1, 1, 0.5]}>
+                          <MDBox lineHeight={1.4}>
+                            <MDTypography display="block" variant="button" fontWeight="regular">
+                              {user.name}
+                            </MDTypography>
+                          </MDBox>
+                        </TableCell>
+                        <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                          <Checkbox disabled defaultChecked={user.readGenerales} />
+                        </TableCell>
+                        <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                          <Checkbox disabled defaultChecked={user.editGenerales} />
+                        </TableCell>
+                        <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                          <Checkbox disabled defaultChecked={user.readET} />
+                        </TableCell>
+                        <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                          <Checkbox disabled defaultChecked={user.editTransporte} />
+                        </TableCell>
+                        <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                          <Checkbox disabled defaultChecked={user.readRH} />
+                        </TableCell>
+                        <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                          <Checkbox disabled defaultChecked={user.editRh} />
+                        </TableCell>
+                        <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                          <Checkbox disabled defaultChecked={user.readGestionC} />
+                        </TableCell>
+                        <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                          <Checkbox disabled defaultChecked={user.editCombustibles} />
+                        </TableCell>
+                        <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                          <Checkbox disabled defaultChecked={user.readMantenimientoET} />
+                        </TableCell>
+                        <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                          <Checkbox disabled defaultChecked={user.editMantenimientoEt} />
+                        </TableCell>
+                        <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                          <Checkbox disabled defaultChecked={user.readInvRefacciones} />
+                        </TableCell>
+                        <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                          <Checkbox disabled defaultChecked={user.editRefacciones} />
+                        </TableCell>
+                        <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                          <Checkbox disabled defaultChecked={user.readLogistics} />
+                        </TableCell>
+                        <TableCell align="center" padding={[1, 1, 1, 0.5]}>
+                          <Checkbox disabled defaultChecked={user.editLogistica} />
+                        </TableCell>
+                      </TableRow>
+                    ))}
                 </TableBody>
               </Table>
             </MDBox>
