@@ -171,7 +171,7 @@ const routes = [
       {
         name: "Marcas ET",
         key: "marcasET",
-        // route: "/GestionET/MarcasET",
+        route: "/GestionET/MarcasET",
         component: <MarcasET />,
       },
       {

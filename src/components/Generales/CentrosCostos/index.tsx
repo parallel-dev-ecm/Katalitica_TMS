@@ -1,13 +1,7 @@
-import dataTableData from "layouts/applications/data-tables/data/dataTableData";
-import React, { useState, useEffect } from "react";
-import axios from "axios"; // Do you still need this? If not, remove it.
-import axiosInstance from "components/Api";
+import { useState, useEffect } from "react";
 import DataTableWithModal from "components/Resources/DataTableWithModal";
 import { CentroCostos, useCCstore } from "Store_CentroCostos";
-import DataTable from "examples/Tables/DataTable";
-import { table } from "console";
 import { useNavigate } from "react-router";
-import { useAuthStore } from "Store_Auth";
 import { useUsersStore, User } from "Store_Users";
 import Unauthorized from "components/Resources/Unauthorized";
 
@@ -30,10 +24,8 @@ function ListCentroCostos(): JSX.Element {
   const [currentUser, setCurrentUser] = useState<User>();
   const [authorizedToRead, SetAuthorizedToRead] = useState<boolean>(false);
   const [authorizedToWrite, SetAuthorizedToWrite] = useState<boolean>(false);
-  const getUser = useAuthStore((state) => state.currentUser);
 
   const getAllCC = useCCstore((state) => state.readAllCentroCostos);
-  const [tableData, setTableData] = useState<CentroCostos[]>([]); // This will store your fetched data.
   const allCC = useCCstore((state) => state.allCentroCostos);
   const postCC = useCCstore((state) => state.addCentroCostos);
 
@@ -44,6 +36,7 @@ function ListCentroCostos(): JSX.Element {
   useEffect(() => {
     fetchUserApi();
   }, []);
+
   useEffect(() => {
     // Get username from sessionStorage
     const storedUsername = sessionStorage.getItem("userName");
