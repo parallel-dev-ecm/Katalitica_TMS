@@ -1,54 +1,75 @@
-import { Box } from "@mui/system"; // Import Box from MUI
-// @mui material components
-import Card from "@mui/material/Card";
+import DataTableWithModal from "components/Resources/DataTableWithModal";
+import { useUsersStore, User } from "Store_Users";
+import { useEffect, useState } from "react";
+import Unauthorized from "components/Resources/Unauthorized";
+import { useMarcasMotoresStore, MarcaMotor } from "Store_MarcasMotores";
 
-// Material Dashboard 2 PRO React TS components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+function MarcasET(): JSX.Element {
+  const columns = [
+    { Header: "Clave", accessor: "clave" },
+    { Header: "Descripción", accessor: "descripcion" },
+  ];
 
-// Material Dashboard 2 PRO React TS examples components
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
-import DataTable from "examples/Tables/DataTable";
+  const getAllMarcas = useMarcasMotoresStore((state) => state.readAllMarcasMotores);
+  const allCC = useMarcasMotoresStore((state) => state.allMarcasMotores);
+  const postCC = useMarcasMotoresStore((state) => state.addMarcaMotores);
+  const fetchUserApi = useUsersStore((state) => state.getUsers);
+  const allUsers = useUsersStore((state) => state.allUsers);
+  const [currentUser, setCurrentUser] = useState<User>();
+  const [authorizedToRead, SetAuthorizedToRead] = useState<boolean>(false);
+  const [authorizedToWrite, SetAuthorizedToWrite] = useState<boolean>(false);
 
-// Data
-import dataTableData from "layouts/applications/data-tables/data/dataTableData";
-import MDButton from "components/MDButton";
+  useEffect(() => {
+    getAllMarcas();
+  }, []);
 
-function MarcasMotores(): JSX.Element {
+  useEffect(() => {
+    fetchUserApi();
+  }, []);
+
+  useEffect(() => {
+    // Get username from sessionStorage
+    const storedUsername = sessionStorage.getItem("userName");
+
+    const user = allUsers.find((u) => u.username === storedUsername);
+
+    if (user) {
+      setCurrentUser(user);
+      SetAuthorizedToRead(user.readET);
+      SetAuthorizedToWrite(user.editTransporte);
+    } else {
+      console.log("User not found");
+    }
+  }, [allUsers]);
+
+  const handleAddCentroCostos = async (data: MarcaMotor) => {
+    const isSuccess = await postCC(data);
+    if (isSuccess) {
+      document.location.reload();
+    } else {
+      console.log("Failed to add.");
+    }
+  };
+
   return (
-    <DashboardLayout>
-      <DashboardNavbar />
-      <MDBox pt={6} pb={3}>
-        <Card>
-          <MDBox
-            p={3}
-            lineHeight={1}
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Box>
-              {" "}
-              {/* New Box component for grouping the typography elements */}
-              <MDTypography variant="h5" fontWeight="medium">
-                Marcas de equipo de transporte.
-              </MDTypography>
-              <MDTypography variant="button" color="text">
-                Información general de las marcas de ET.
-              </MDTypography>
-            </Box>
-            <MDButton variant="gradient" color="dark">
-              Add new
-            </MDButton>
-          </MDBox>
-          <DataTable table={dataTableData} canSearch />
-        </Card>
-      </MDBox>
-      <Footer />
-    </DashboardLayout>
+    <>
+      {authorizedToRead && (
+        <DataTableWithModal
+          dialogTitle="Añadir nueva marca de motor."
+          title="Marcas de Motores"
+          dataTableData={{ rows: allCC, columns: columns }} // Pass the state to the prop.
+          description="Información General de las marcas de motores"
+          buttonEditable={authorizedToWrite}
+          modalInputs={[
+            { label: "Clave", dbName: "clave", type: "text" },
+            { label: "Descripción", dbName: "descripcion", type: "text" },
+          ]}
+          onAdd={handleAddCentroCostos}
+        />
+      )}
+      {!authorizedToRead && <Unauthorized />}
+    </>
   );
 }
 
-export default MarcasMotores;
+export default MarcasET;

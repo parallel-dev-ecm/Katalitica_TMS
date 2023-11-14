@@ -67,6 +67,7 @@ function ListCentroCostos(): JSX.Element {
     <>
       {authorizedToRead && (
         <DataTableWithModal
+          dialogTitle="Añadir nuevo centro de costos"
           title="Centro de Costos"
           dataTableData={{ rows: allCC, columns: columns }} // Pass the state to the prop.
           description="Información General de los centros de costos"

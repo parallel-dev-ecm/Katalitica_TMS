@@ -30,6 +30,7 @@ interface InputProps {
 
 interface DataTableWithModalProps {
   title: string;
+  dialogTitle: string;
   buttonEditable?: boolean;
   modalInputs?: InputProps[];
   description: string;
@@ -41,6 +42,7 @@ function DataTableWithModal({
   title,
   description,
   dataTableData,
+  dialogTitle,
   modalInputs,
   onAdd,
   buttonEditable,
@@ -105,7 +107,7 @@ function DataTableWithModal({
       <Footer />
 
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Añadir nueva entrada</DialogTitle>
+        <DialogTitle>{dialogTitle}</DialogTitle>
         <DialogContent>
           {modalInputs &&
             modalInputs.map((input, index) => (

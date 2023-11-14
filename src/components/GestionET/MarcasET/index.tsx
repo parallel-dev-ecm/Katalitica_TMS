@@ -1,4 +1,3 @@
-import dataTableData from "layouts/applications/data-tables/data/dataTableData";
 import DataTableWithModal from "components/Resources/DataTableWithModal";
 import { useUsersStore, User } from "Store_Users";
 import { useEffect, useState } from "react";
@@ -56,9 +55,10 @@ function MarcasET(): JSX.Element {
     <>
       {authorizedToRead && (
         <DataTableWithModal
-          title="Centro de Costos"
+          dialogTitle="Añadir nueva marca de ET."
+          title="Marcas de equipo de transporte"
           dataTableData={{ rows: allCC, columns: columns }} // Pass the state to the prop.
-          description="Información General de los centros de costos"
+          description="Información General de las marcas de equipo de transporte"
           buttonEditable={authorizedToWrite}
           modalInputs={[
             { label: "Clave", dbName: "clave", type: "text" },

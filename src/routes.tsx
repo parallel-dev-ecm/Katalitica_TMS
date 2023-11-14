@@ -64,7 +64,7 @@ import MarcasMotores from "components/GestionET/MarcasMotores";
 import AñadirCentroCostos from "components/Generales/CentrosCostos/pages/NewCentroCostos/NewCentroCostos";
 import UserSecurity from "components/Generales/UserSecurity";
 import ListCentroCostos from "components/Generales/CentrosCostos";
-import TractoresTable from "components/GestionET/Tractores";
+import Tractores from "components/GestionET/Tractores";
 import TiposRemolques from "components/GestionET/TiposRemolques";
 import MarcasValvulas from "components/GestionET/MarcasValvulas";
 import Remolques from "components/GestionET/Remolques";
@@ -177,25 +177,25 @@ const routes = [
       {
         name: "Marcas de motores",
         key: "marcasMotores",
-        //  route: "/GestionET/marcasMotores",
+        route: "/GestionET/marcasMotores",
         component: <MarcasMotores />,
       },
       {
         name: "Tractores",
         key: "tractores",
-        //  route: "/GestionET/tractores",
-        component: <TractoresTable />,
+        route: "/GestionET/tractores",
+        component: <Tractores />,
       },
       {
         name: "Tipos Remolques",
         key: "tiposRemolques",
-        // route: "/GestionET/tiposRemolques",
+        route: "/GestionET/tiposRemolques",
         component: <TiposRemolques />,
       },
       {
         name: "Marcas de válvulas",
         key: "marcasValvulas",
-        //route: "/GestionET/marcasValvulas",
+        route: "/GestionET/marcasValvulas",
         component: <MarcasValvulas />,
       },
       {
