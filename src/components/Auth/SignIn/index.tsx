@@ -16,6 +16,9 @@ import truckLogo from "../../../assets/images/logoTruck.png";
 
 import bgImage1 from "assets/images/truck1.jpg";
 import bgImage2 from "assets/images/truck2.png";
+import bgImage3 from "assets/images/image.png";
+import bgImage4 from "assets/images/foto2.jpg";
+
 import Footer from "../Components/CoverLayout/Footer";
 import MDBox from "components/MDBox";
 
@@ -23,13 +26,13 @@ function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {"Copyright © "}
-      <Link color="inherit">Katalticia</Link> {new Date().getFullYear()}
+      <Link color="inherit">Katalitica</Link> {new Date().getFullYear()}
       {"."}
     </Typography>
   );
 }
 
-const images = [bgImage1, bgImage2];
+const images = [bgImage1, bgImage2, bgImage3, bgImage4];
 
 export default function SignInSide() {
   const authenticate = useAuthStore((state) => state.authenticate);

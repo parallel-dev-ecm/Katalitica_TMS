@@ -1,62 +1,74 @@
-import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
-import BaseLayout from "layouts/pages/account/components/BaseLayout";
-import MDBox from "components/MDBox";
-import { Grid } from "@mui/material";
+import DataTableWithModal from "components/Resources/DataTableWithModal";
+import { useUsersStore, User } from "Store_Users";
+import { useEffect, useState } from "react";
+import Unauthorized from "components/Resources/Unauthorized";
+import { Puesto, usePuestoStore } from "Store_Puestos";
 
-type Props = {};
+function PuestosColaboradores(): JSX.Element {
+  const columns = [
+    { Header: "Clave", accessor: "clave" },
+    { Header: "Descripcion", accessor: "descripcion" },
+  ];
 
-function PuestosColaboradores({}: Props) {
+  const getAllMarcas = usePuestoStore((state) => state.readAllPuestos);
+  const allCC = usePuestoStore((state) => state.allPuestos);
+  const postCC = usePuestoStore((state) => state.addPuesto);
+  const fetchUserApi = useUsersStore((state) => state.getUsers);
+  const allUsers = useUsersStore((state) => state.allUsers);
+  const [currentUser, setCurrentUser] = useState<User>();
+  const [authorizedToRead, SetAuthorizedToRead] = useState<boolean>(false);
+  const [authorizedToWrite, SetAuthorizedToWrite] = useState<boolean>(false);
+
+  useEffect(() => {
+    getAllMarcas();
+  }, []);
+
+  useEffect(() => {
+    fetchUserApi();
+  }, []);
+
+  useEffect(() => {
+    // Get username from sessionStorage
+    const storedUsername = sessionStorage.getItem("userName");
+
+    const user = allUsers.find((u) => u.username === storedUsername);
+
+    if (user) {
+      setCurrentUser(user);
+      SetAuthorizedToRead(user.readRH);
+      SetAuthorizedToWrite(user.editRh);
+    } else {
+      console.log("User not found");
+    }
+  }, [allUsers]);
+
+  const handleAddCentroCostos = async (data: Puesto) => {
+    const isSuccess = await postCC(data);
+    if (isSuccess) {
+      document.location.reload();
+    } else {
+      console.log("Failed to add.");
+    }
+  };
+
   return (
-    <div>
-      <BaseLayout>
-        <MDBox pt={4} pb={3}>
-          <Grid container spacing={5} justifyContent={"center"} alignItems={"center"}>
-            <Grid item xs={12} sm={6} lg={6}>
-              <MDBox mb={3}>
-                <ProfileInfoCard
-                  title="Manager"
-                  description="Encargados de supervisar "
-                  info={{
-                    Salario: "$2323",
-                    Gerente: "alecthompson@mail.com",
-                    Cantidad: "20",
-                  }}
-                  action={{ route: "", tooltip: "Edit Profile" }}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} sm={6} lg={6}>
-              <MDBox mb={3}>
-                <ProfileInfoCard
-                  title="Mecánico"
-                  description="Mecánico especializado "
-                  info={{
-                    Salario: "$2323",
-                    Gerente: "alecthompson@mail.com",
-                    Cantidad: "20",
-                  }}
-                  action={{ route: "", tooltip: "Edit Profile" }}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} sm={6} lg={6}>
-              <MDBox mb={3}>
-                <ProfileInfoCard
-                  title="Ingeníero."
-                  description="Encargados de supervisar area 1. "
-                  info={{
-                    Salario: "$2323",
-                    Gerente: "alecthompson@mail.com",
-                    Cantidad: "20",
-                  }}
-                  action={{ route: "", tooltip: "Edit Profile" }}
-                />
-              </MDBox>
-            </Grid>
-          </Grid>
-        </MDBox>
-      </BaseLayout>
-    </div>
+    <>
+      {authorizedToRead && (
+        <DataTableWithModal
+          dialogTitle="Añadir nuevo Puesto."
+          title="Puestos colaboradores"
+          dataTableData={{ rows: allCC, columns: columns }} // Pass the state to the prop.
+          description="Información general de los puestos de colaboradores"
+          buttonEditable={authorizedToWrite}
+          modalInputs={[
+            { label: "Clave", dbName: "clave", type: "text" },
+            { label: "Descripcion", dbName: "descripcion", type: "text" },
+          ]}
+          onAdd={handleAddCentroCostos}
+        />
+      )}
+      {!authorizedToRead && <Unauthorized />}
+    </>
   );
 }
 
