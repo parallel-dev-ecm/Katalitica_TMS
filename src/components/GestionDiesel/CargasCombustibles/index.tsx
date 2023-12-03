@@ -2,12 +2,12 @@ import DataTableWithModal from "components/Resources/DataTableWithModal";
 import { useUsersStore, User } from "Store_Users";
 import { useEffect, useState } from "react";
 import Unauthorized from "components/Resources/Unauthorized";
-import { useCombustiblesStore, Combustibles } from "Store_Combustibles";
+import { CargasCombustibles, useCargasCombustiblesStore } from "Store_CargasCombustibles";
 
-function CategoriasColaboradores(): JSX.Element {
-  const getAllMarcas = useCombustiblesStore((state) => state.readAllPuestos);
-  const allCC = useCombustiblesStore((state) => state.allPuestos);
-  const postCC = useCombustiblesStore((state) => state.addPuesto);
+function CatalogoCargasCombustible(): JSX.Element {
+  const getAllMarcas = useCargasCombustiblesStore((state) => state.readAllPuestos);
+  const allCC = useCargasCombustiblesStore((state) => state.allPuestos);
+  const postCC = useCargasCombustiblesStore((state) => state.addPuesto);
   const fetchUserApi = useUsersStore((state) => state.getUsers);
   const allUsers = useUsersStore((state) => state.allUsers);
   const [currentUser, setCurrentUser] = useState<User>();
@@ -37,7 +37,7 @@ function CategoriasColaboradores(): JSX.Element {
     }
   }, [allUsers]);
 
-  const handleAddCentroCostos = async (data: Combustibles) => {
+  const handleAddCentroCostos = async (data: CargasCombustibles) => {
     const isSuccess = await postCC(data);
     if (isSuccess) {
       document.location.reload();
@@ -45,7 +45,7 @@ function CategoriasColaboradores(): JSX.Element {
       console.log("Failed to add.");
     }
   };
-  const generateColumns = (data: Combustibles): { Header: string; accessor: string }[] => {
+  const generateColumns = (data: CargasCombustibles): { Header: string; accessor: string }[] => {
     // Assuming Colaborador is an interface, you can get its keys using Object.keys
     const colaboradorKeys = Object.keys(data);
 
@@ -56,21 +56,33 @@ function CategoriasColaboradores(): JSX.Element {
     }));
   };
   const modalInputs = [
-    { label: "Clave", dbName: "clave", type: "text" },
-    { label: "Descripcion", dbName: "descripcion", type: "text" },
+    { label: "Folio", dbName: "folio", type: "text" },
+    { label: "Serie", dbName: "serie", type: "text" },
+    { label: "Fecha Carga", dbName: "fecha_carga", type: "date" },
+    { label: "Fecha Captura", dbName: "fecha_captura", type: "date" },
+    { label: "Id Combustible", dbName: "id_combustible", type: "text" },
+    { label: "Id Estacion Servicio", dbName: "id_estacionservicio", type: "text" },
+    { label: "Litros", dbName: "litros", type: "text" },
+    { label: "Odometro", dbName: "odometro", type: "text" },
+    { label: "Clave Proveedor", dbName: "clave_proveedor", type: "text" },
+    { label: "Id Tractore", dbName: "id_tractores", type: "text" },
+    { label: "Id Auto Admn", dbName: "id_autoadmin", type: "text" },
+    { label: "Id Centro Costos", dbName: "id_centrocostos", type: "text" },
+    { label: "Id Colaborador", dbName: "id_colaborador", type: "text" },
+    { label: "Tipo ET", dbName: "tipo_et", type: "text" },
   ];
 
   // Assuming allCC is an array of Colaborador objects
-  const columns = generateColumns(allCC.length > 0 ? allCC[0] : ({} as Combustibles));
+  const columns = generateColumns(allCC.length > 0 ? allCC[0] : ({} as CargasCombustibles));
 
   return (
     <>
       {authorizedToRead && (
         <DataTableWithModal
-          dialogTitle="Añadir nuevo combustible."
-          title="Combustibles disponibles"
+          dialogTitle="Añadir nuevo carga de combustible."
+          title="Cargas de combustible"
           dataTableData={{ rows: allCC, columns: columns }} // Pass the state to the prop.
-          description="Información general de los combustibles"
+          description="Información general de las cargas de combustible"
           buttonEditable={authorizedToWrite}
           modalInputs={modalInputs}
           onAdd={handleAddCentroCostos}
@@ -81,4 +93,4 @@ function CategoriasColaboradores(): JSX.Element {
   );
 }
 
-export default CategoriasColaboradores;
+export default CatalogoCargasCombustible;

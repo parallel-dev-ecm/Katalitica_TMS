@@ -78,6 +78,8 @@ import PuestosColaboradores from "components/GestionDeTalento/PuestosDeLosColabo
 import AreasColaboradores from "components/GestionDeTalento/AreasColaboradores";
 import EstacionesServicio from "components/GestionDiesel/EstacionesServicio";
 import Cover from "components/Auth/SignIn";
+import Combustibles from "components/GestionDiesel/Combustibles";
+import CargasCombustibles from "components/GestionDiesel/CargasCombustibles";
 
 const currentUser = sessionStorage.getItem("userName");
 
@@ -265,20 +267,20 @@ const routes = [
       {
         name: "Combustibles",
         key: "combustibles",
-        //  route: "/GestionDiesel/combustibles",
-        component: <TiposColaboradores />,
+        route: "/GestionDiesel/combustibles",
+        component: <Combustibles />,
       },
       {
         name: "Estaciones De Servicio",
         key: "EstacionesServicio",
-        //  route: "/GestionDiesel/EstacionesServicio",
+        route: "/GestionDiesel/EstacionesServicio",
         component: <EstacionesServicio />,
       },
       {
         name: "Cargas de Combustibles",
         key: "puestosColaboradores",
-        // route: "/GestionDiesel/cargasCombustibles",
-        component: <PuestosColaboradores />,
+        route: "/GestionDiesel/cargasCombustibles",
+        component: <CargasCombustibles />,
       },
       {
         name: "Factor Rendimiento",
