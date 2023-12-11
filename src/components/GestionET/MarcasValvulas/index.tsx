@@ -1,8 +1,8 @@
 import DataTableWithModal from "components/Resources/DataTableWithModal";
-import { useUsersStore, User } from "Store_Users";
+import { useUsersStore, User } from "stores/Store_Users";
 import { useEffect, useState } from "react";
 import Unauthorized from "components/Resources/Unauthorized";
-import { MarcaValvulas, useMarcaValvulasStore } from "Store_MarcasValvulas";
+import { MarcaValvulas, useMarcaValvulasStore } from "stores/Store_MarcasValvulas";
 
 function MarcasET(): JSX.Element {
   const columns = [

@@ -1,9 +1,9 @@
 import DataTableWithModal from "components/Resources/DataTableWithModal";
-import { useUsersStore, User } from "Store_Users";
+import { useUsersStore, User } from "stores/Store_Users";
 import { useEffect, useState } from "react";
 import Unauthorized from "components/Resources/Unauthorized";
-import { useTractoresStore, Tractor } from "Store_Tractores";
-import { Remolque, useRemolquesStore } from "Store_Remolques";
+import { useTractoresStore, Tractor } from "stores/Store_Tractores";
+import { Remolque, useRemolquesStore } from "stores/Store_Remolques";
 
 function Remolques(): JSX.Element {
   const columns = [

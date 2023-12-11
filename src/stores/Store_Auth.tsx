@@ -1,6 +1,4 @@
-import { create, useStore } from "zustand";
-
-import axios from "axios";
+import { create } from "zustand";
 import axiosInstance from "components/Api";
 
 interface currentUser {
@@ -29,14 +27,11 @@ const useAuthStore = create<State & Actions>((set, get) => ({
         username: username,
         password: password,
       });
-      const dbUser = await axiosInstance.post("/company/getUser", {
-        username: username,
-        password: password,
-      });
 
       set({ isAuthenticated: true });
       sessionStorage.setItem("authToken", "true");
       set({ currentUser: response.data });
+      console.log(get().currentUser);
       sessionStorage.setItem("userName", get().currentUser.displayName);
 
       return true;

@@ -52,6 +52,7 @@ import SignUpCover from "layouts/authentication/sign-up/cover";
 import ResetCover from "layouts/authentication/reset-password/cover";
 import MarcasET from "components/GestionET/MarcasET";
 import LocalGasStationIcon from "@mui/icons-material/LocalGasStation";
+import SupportIcon from "@mui/icons-material/Support";
 
 // Material Dashboard 2 PRO React TS components
 import MDAvatar from "components/MDAvatar";
@@ -80,6 +81,10 @@ import EstacionesServicio from "components/GestionDiesel/EstacionesServicio";
 import Cover from "components/Auth/SignIn";
 import Combustibles from "components/GestionDiesel/Combustibles";
 import CargasCombustibles from "components/GestionDiesel/CargasCombustibles";
+import Talleres from "components/Mantenimiento/Talleres";
+import Piezas from "components/Mantenimiento/Piezas";
+import Criterios from "components/Mantenimiento/Criterio";
+import Actividades from "components/Mantenimiento/Actividades";
 
 const currentUser = sessionStorage.getItem("userName");
 
@@ -287,6 +292,38 @@ const routes = [
         key: "factor-rendimiento",
         // route: "/GestionDiesel/factorRendimiento",
         component: <Colaboradores />,
+      },
+    ],
+  },
+  {
+    type: "collapse",
+    name: "Mantenimiento",
+    key: "mantenimiento",
+    icon: <SupportIcon fontSize="medium" />,
+    collapse: [
+      {
+        name: "Talleres",
+        key: "talleres",
+        route: "/Mantenimiento/Talleres",
+        component: <Talleres />,
+      },
+      {
+        name: "Piezas",
+        key: "piezas",
+        route: "/Mantenimiento/Piezas",
+        component: <Piezas />,
+      },
+      {
+        name: "Criterios",
+        key: "criterios",
+        route: "/Mantenimiento/Criterios",
+        component: <Criterios />,
+      },
+      {
+        name: "Actividades",
+        key: "actividades",
+        route: "/Mantenimiento/Actividades",
+        component: <Actividades />,
       },
     ],
   },

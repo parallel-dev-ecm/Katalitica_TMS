@@ -8,7 +8,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import PageLayout from "examples/LayoutContainers/PageLayout";
-import { useAuthStore } from "Store_Auth";
+import { useAuthStore } from "stores/Store_Auth";
 import { ChangeEvent, useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useNavigate } from "react-router-dom";

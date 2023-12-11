@@ -1,8 +1,8 @@
 import DataTableWithModal from "components/Resources/DataTableWithModal";
-import { useUsersStore, User } from "Store_Users";
+import { useUsersStore, User } from "stores/Store_Users";
 import { useEffect, useState } from "react";
 import Unauthorized from "components/Resources/Unauthorized";
-import { useTractoresStore, Tractor } from "Store_Tractores";
+import { useTractoresStore, Tractor } from "stores/Store_Tractores";
 
 function Tractores(): JSX.Element {
   const columns = [

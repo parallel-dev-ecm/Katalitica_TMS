@@ -1,9 +1,9 @@
 import DataTableWithModal from "components/Resources/DataTableWithModal";
-import { useUsersStore, User } from "Store_Users";
+import { useUsersStore, User } from "stores/Store_Users";
 
 import { useEffect, useState } from "react";
 import Unauthorized from "components/Resources/Unauthorized";
-import { useAreasStore, CategoriaColaborador } from "Store_AreasColaboradores";
+import { useAreasStore, CategoriaColaborador } from "stores/Store_AreasColaboradores";
 
 function CategoriasColaboradores(): JSX.Element {
   const columns = [

@@ -1,6 +1,6 @@
 import { useNavigate, Outlet } from "react-router-dom";
 import React from "react";
-import { useAuthStore } from "Store_Auth";
+import { useAuthStore } from "stores/Store_Auth";
 
 export default function PrivateRoute() {
   let navigate = useNavigate();

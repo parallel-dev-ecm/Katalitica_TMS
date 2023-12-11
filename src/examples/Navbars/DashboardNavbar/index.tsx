@@ -36,7 +36,7 @@ import {
   setMiniSidenav,
   setOpenConfigurator,
 } from "context";
-import { useAuthStore } from "Store_Auth";
+import { useAuthStore } from "stores/Store_Auth";
 import MDTypography from "components/MDTypography";
 
 // Declaring prop types for DashboardNavbar

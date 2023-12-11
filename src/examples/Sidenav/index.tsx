@@ -33,7 +33,7 @@ import {
   setWhiteSidenav,
 } from "context";
 import MDButton from "components/MDButton";
-import { useAuthStore } from "Store_Auth";
+import { useAuthStore } from "stores/Store_Auth";
 
 // Declaring props types for Sidenav
 interface Props {

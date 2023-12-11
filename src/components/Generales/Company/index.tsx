@@ -1,16 +1,15 @@
 // @mui material components
 import Grid from "@mui/material/Grid";
 import MDBox from "components/MDBox";
-import { User } from "Store_Users";
+import { User } from "stores/Store_Users";
 
 // Overview page components
 import BaseLayout from "layouts/pages/account/components/BaseLayout";
 import Sidenav from "layouts/pages/account/settings/components/Sidenav";
 import Header from "layouts/pages/account/settings/components/Header";
 import BasicInfo from "layouts/pages/account/settings/components/BasicInfo";
-import { useAuthStore } from "Store_Auth";
-import { currentUserStore } from "STORE_CurrentUser";
-import { useUsersStore } from "Store_Users";
+import { useAuthStore } from "stores/Store_Auth";
+import { useUsersStore } from "stores/Store_Users";
 import { useEffect, useState } from "react";
 
 function Overview(): JSX.Element {

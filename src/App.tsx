@@ -39,8 +39,8 @@ import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 import { enableMapSet } from "immer";
 import Cover from "components/Auth/SignIn";
-import { useAuthStore } from "Store_Auth";
-import { currentCompanyStore } from "Store_Company";
+import { useAuthStore } from "stores/Store_Auth";
+import { currentCompanyStore } from "stores/Store_Company";
 import PrivateRoute from "components/ProtectedRoute";
 
 enableMapSet();

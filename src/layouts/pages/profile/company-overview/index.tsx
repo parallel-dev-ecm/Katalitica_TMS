@@ -7,7 +7,7 @@ import BaseLayout from "layouts/pages/account/components/BaseLayout";
 import Sidenav from "layouts/pages/account/settings/components/Sidenav";
 import Header from "layouts/pages/account/settings/components/Header";
 import BasicInfo from "layouts/pages/account/settings/components/BasicInfo";
-import { useAuthStore } from "Store_Auth";
+import { useAuthStore } from "stores/Store_Auth";
 
 function Overview(): JSX.Element {
   return (

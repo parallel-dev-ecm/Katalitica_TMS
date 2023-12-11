@@ -4,28 +4,20 @@ import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Autocomplete from "@mui/material/Autocomplete";
 import { gsap } from "gsap";
-import { User, useUsersStore } from "Store_Users";
-
+import { User, useUsersStore } from "stores/Store_Users";
 // Material Dashboard 2 PRO React TS components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-
 // Settings page components
 import FormField from "layouts/pages/account/components/FormField";
-
 // Data
-import selectData, {
-  mexicanStates,
-} from "layouts/pages/account/settings/components/BasicInfo/data/selectData";
-import { currentUserStore } from "STORE_CurrentUser";
+import { mexicanStates } from "layouts/pages/account/settings/components/BasicInfo/data/selectData";
 import MDButton from "components/MDButton";
-import { useAuthStore } from "Store_Auth";
-import { Company, currentCompanyStore } from "Store_Company";
+import { useAuthStore } from "stores/Store_Auth";
+import { Company, currentCompanyStore } from "stores/Store_Company";
 import { Alert } from "@mui/material";
 
 function BasicInfo(): JSX.Element {
-  const userStore = currentUserStore((state) => state);
-
   const [disabled, setDisabled] = useState(false);
   const [loading, setLoading] = useState(true);
 

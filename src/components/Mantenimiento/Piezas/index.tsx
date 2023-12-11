@@ -2,17 +2,12 @@ import DataTableWithModal from "components/Resources/DataTableWithModal";
 import { useUsersStore, User } from "stores/Store_Users";
 import { useEffect, useState } from "react";
 import Unauthorized from "components/Resources/Unauthorized";
-import { useMarcasMotoresStore, MarcaMotor } from "stores/Store_MarcasMotores";
+import { usePiezasStore, Pieza } from "stores/Mantenimiento/Store_Piezas";
 
-function MarcasET(): JSX.Element {
-  const columns = [
-    { Header: "Clave", accessor: "clave" },
-    { Header: "Descripción", accessor: "descripcion" },
-  ];
-
-  const getAllMarcas = useMarcasMotoresStore((state) => state.readAllMarcasMotores);
-  const allCC = useMarcasMotoresStore((state) => state.allMarcasMotores);
-  const postCC = useMarcasMotoresStore((state) => state.addMarcaMotores);
+function Piezas(): JSX.Element {
+  const getAllMarcas = usePiezasStore((state) => state.readAllPuestos);
+  const allCC = usePiezasStore((state) => state.allPuestos);
+  const postCC = usePiezasStore((state) => state.addPuesto);
   const fetchUserApi = useUsersStore((state) => state.getUsers);
   const allUsers = useUsersStore((state) => state.allUsers);
   const [currentUser, setCurrentUser] = useState<User>();
@@ -35,14 +30,14 @@ function MarcasET(): JSX.Element {
 
     if (user) {
       setCurrentUser(user);
-      SetAuthorizedToRead(user.readET);
-      SetAuthorizedToWrite(user.editTransporte);
+      SetAuthorizedToRead(user.readMantenimientoET);
+      SetAuthorizedToWrite(user.editMantenimientoEt);
     } else {
       console.log("User not found");
     }
   }, [allUsers]);
 
-  const handleAddCentroCostos = async (data: MarcaMotor) => {
+  const handleAddCentroCostos = async (data: Pieza) => {
     const isSuccess = await postCC(data);
     if (isSuccess) {
       document.location.reload();
@@ -50,20 +45,35 @@ function MarcasET(): JSX.Element {
       console.log("Failed to add.");
     }
   };
+  const generateColumns = (data: Pieza): { Header: string; accessor: string }[] => {
+    // Assuming Colaborador is an interface, you can get its keys using Object.keys
+    const colaboradorKeys = Object.keys(data);
+
+    // Dynamically generate the columns array
+    return colaboradorKeys.map((key) => ({
+      Header: key.charAt(0).toUpperCase() + key.slice(1),
+      accessor: key,
+    }));
+  };
+  const modalInputs = [
+    { label: "Clave Pieza", dbName: "cve_pza", type: "text" },
+    { label: "Nombre Corto", dbName: "nom_corto", type: "text" },
+    { label: "Descripción", dbName: "descripcion", type: "text" },
+  ];
+
+  // Assuming allCC is an array of Colaborador objects
+  const columns = generateColumns(allCC.length > 0 ? allCC[0] : ({} as Pieza));
 
   return (
     <>
       {authorizedToRead && (
         <DataTableWithModal
-          dialogTitle="Añadir nueva marca de motor."
-          title="Marcas de Motores"
+          dialogTitle="Añadir nueva Pieza."
+          title="Piezas"
           dataTableData={{ rows: allCC, columns: columns }} // Pass the state to the prop.
-          description="Información General de las marcas de motores"
+          description="Información general de las piezas de Mantenimiento"
           buttonEditable={authorizedToWrite}
-          modalInputs={[
-            { label: "Clave", dbName: "clave", type: "text" },
-            { label: "Descripción", dbName: "descripcion", type: "text" },
-          ]}
+          modalInputs={modalInputs}
           onAdd={handleAddCentroCostos}
         />
       )}
@@ -72,4 +82,4 @@ function MarcasET(): JSX.Element {
   );
 }
 
-export default MarcasET;
+export default Piezas;

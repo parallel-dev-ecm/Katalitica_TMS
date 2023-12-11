@@ -2,12 +2,12 @@ import DataTableWithModal from "components/Resources/DataTableWithModal";
 import { useUsersStore, User } from "stores/Store_Users";
 import { useEffect, useState } from "react";
 import Unauthorized from "components/Resources/Unauthorized";
-import { useCombustiblesStore, Combustibles } from "stores/Store_Combustibles";
+import { Taller, useTalleresStore } from "stores/Mantenimiento/Store_Talleres";
 
-function CategoriasColaboradores(): JSX.Element {
-  const getAllMarcas = useCombustiblesStore((state) => state.readAllPuestos);
-  const allCC = useCombustiblesStore((state) => state.allPuestos);
-  const postCC = useCombustiblesStore((state) => state.addPuesto);
+function Talleres(): JSX.Element {
+  const getAllMarcas = useTalleresStore((state) => state.readAllPuestos);
+  const allCC = useTalleresStore((state) => state.allPuestos);
+  const postCC = useTalleresStore((state) => state.addPuesto);
   const fetchUserApi = useUsersStore((state) => state.getUsers);
   const allUsers = useUsersStore((state) => state.allUsers);
   const [currentUser, setCurrentUser] = useState<User>();
@@ -30,14 +30,14 @@ function CategoriasColaboradores(): JSX.Element {
 
     if (user) {
       setCurrentUser(user);
-      SetAuthorizedToRead(user.readGestionC);
-      SetAuthorizedToWrite(user.editCombustibles);
+      SetAuthorizedToRead(user.readMantenimientoET);
+      SetAuthorizedToWrite(user.editMantenimientoEt);
     } else {
       console.log("User not found");
     }
   }, [allUsers]);
 
-  const handleAddCentroCostos = async (data: Combustibles) => {
+  const handleAddCentroCostos = async (data: Taller) => {
     const isSuccess = await postCC(data);
     if (isSuccess) {
       document.location.reload();
@@ -45,7 +45,7 @@ function CategoriasColaboradores(): JSX.Element {
       console.log("Failed to add.");
     }
   };
-  const generateColumns = (data: Combustibles): { Header: string; accessor: string }[] => {
+  const generateColumns = (data: Taller): { Header: string; accessor: string }[] => {
     // Assuming Colaborador is an interface, you can get its keys using Object.keys
     const colaboradorKeys = Object.keys(data);
 
@@ -56,21 +56,24 @@ function CategoriasColaboradores(): JSX.Element {
     }));
   };
   const modalInputs = [
-    { label: "Clave", dbName: "clave", type: "text" },
-    { label: "Descripcion", dbName: "descripcion", type: "text" },
+    { label: "Clave Taller", dbName: "cve_taller", type: "text" },
+    { label: "Nombre Corto", dbName: "nom_corto", type: "text" },
+    { label: "Descripción", dbName: "descripcion", type: "text" },
+    { label: "Compañia", dbName: "compania", type: "text" },
+    { label: "Id Centro Costos", dbName: "id_centrocostos", type: "text" },
   ];
 
   // Assuming allCC is an array of Colaborador objects
-  const columns = generateColumns(allCC.length > 0 ? allCC[0] : ({} as Combustibles));
+  const columns = generateColumns(allCC.length > 0 ? allCC[0] : ({} as Taller));
 
   return (
     <>
       {authorizedToRead && (
         <DataTableWithModal
-          dialogTitle="Añadir nuevo combustible."
-          title="Combustibles disponibles"
+          dialogTitle="Añadir nuevo Taller."
+          title="Talleres"
           dataTableData={{ rows: allCC, columns: columns }} // Pass the state to the prop.
-          description="Información general de los combustibles"
+          description="Información general de los Talleres de Mantenimiento"
           buttonEditable={authorizedToWrite}
           modalInputs={modalInputs}
           onAdd={handleAddCentroCostos}
@@ -81,4 +84,4 @@ function CategoriasColaboradores(): JSX.Element {
   );
 }
 
-export default CategoriasColaboradores;
+export default Talleres;
