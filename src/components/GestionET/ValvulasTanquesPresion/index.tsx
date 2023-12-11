@@ -1,8 +1,8 @@
 import DataTableWithModal from "components/Resources/DataTableWithModal";
-import { useUsersStore, User } from "stores/Store_Users";
+import { useUsersStore, User } from "stores/Generales/Store_Users";
 import { useEffect, useState } from "react";
 import Unauthorized from "components/Resources/Unauthorized";
-import { useValvulasPresionStore, ValvulaPresion } from "stores/Store_ValvulasPresion";
+import { useValvulasPresionStore, ValvulaPresion } from "stores/GestionET/Store_ValvulasPresion";
 
 function ValvulasPresion(): JSX.Element {
   const columns = [

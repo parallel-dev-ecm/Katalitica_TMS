@@ -1,8 +1,8 @@
 import DataTableWithModal from "components/Resources/DataTableWithModal";
-import { useUsersStore, User } from "stores/Store_Users";
+import { useUsersStore, User } from "stores/Generales/Store_Users";
 import { useEffect, useState } from "react";
 import Unauthorized from "components/Resources/Unauthorized";
-import { CargasCombustibles, useCargasCombustiblesStore } from "stores/Store_CargasCombustibles";
+import { CargasCombustibles, useCargasCombustiblesStore } from "stores/GestionDiesel/Store_CargasCombustibles";
 
 function CatalogoCargasCombustible(): JSX.Element {
   const getAllMarcas = useCargasCombustiblesStore((state) => state.readAllPuestos);

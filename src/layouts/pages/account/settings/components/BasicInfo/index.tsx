@@ -4,7 +4,7 @@ import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Autocomplete from "@mui/material/Autocomplete";
 import { gsap } from "gsap";
-import { User, useUsersStore } from "stores/Store_Users";
+import { User, useUsersStore } from "stores/Generales/Store_Users";
 // Material Dashboard 2 PRO React TS components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -14,7 +14,7 @@ import FormField from "layouts/pages/account/components/FormField";
 import { mexicanStates } from "layouts/pages/account/settings/components/BasicInfo/data/selectData";
 import MDButton from "components/MDButton";
 import { useAuthStore } from "stores/Store_Auth";
-import { Company, currentCompanyStore } from "stores/Store_Company";
+import { Company, currentCompanyStore } from "stores/Generales/Store_Company";
 import { Alert } from "@mui/material";
 
 function BasicInfo(): JSX.Element {

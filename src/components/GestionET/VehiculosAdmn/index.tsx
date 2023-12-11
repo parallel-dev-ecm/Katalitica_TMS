@@ -1,8 +1,8 @@
 import DataTableWithModal from "components/Resources/DataTableWithModal";
-import { useUsersStore, User } from "stores/Store_Users";
+import { useUsersStore, User } from "stores/Generales/Store_Users";
 import { useEffect, useState } from "react";
 import Unauthorized from "components/Resources/Unauthorized";
-import { VehiculoAdmin, useVehicleStore } from "stores/Store_VehiculosAdmin";
+import { VehiculoAdmin, useVehicleStore } from "stores/GestionET/Store_VehiculosAdmin";
 
 function Vehiculos_Admn(): JSX.Element {
   const columns = [

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import DataTableWithModal from "components/Resources/DataTableWithModal";
-import { CentroCostos, useCCstore } from "stores/Store_CentroCostos";
+import { CentroCostos, useCCstore } from "stores/Generales/Store_CentroCostos";
 import { useNavigate } from "react-router";
-import { useUsersStore, User } from "stores/Store_Users";
+import { useUsersStore, User } from "stores/Generales/Store_Users";
 import Unauthorized from "components/Resources/Unauthorized";
 
 function ListCentroCostos(): JSX.Element {

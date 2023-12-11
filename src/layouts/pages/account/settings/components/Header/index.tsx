@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Switch from "@mui/material/Switch";
-import { User } from "stores/Store_Users";
+import { User } from "stores/Generales/Store_Users";
 
 // Material Dashboard 2 PRO React TS components
 import MDBox from "components/MDBox";
@@ -13,7 +13,7 @@ import MDAvatar from "components/MDAvatar";
 
 // Images
 import burceMars from "assets/images/bruce-mars.jpg";
-import { useUsersStore } from "stores/Store_Users";
+import { useUsersStore } from "stores/Generales/Store_Users";
 
 function Header(): JSX.Element {
   const userName = sessionStorage.getItem("userName");

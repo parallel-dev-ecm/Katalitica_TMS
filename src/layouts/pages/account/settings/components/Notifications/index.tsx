@@ -11,7 +11,7 @@ import MDTypography from "components/MDTypography";
 // Setting pages components
 import TableCell from "layouts/pages/account/settings/components/TableCell";
 import { Box, Checkbox } from "@mui/material";
-import { useUsersStore, User } from "stores/Store_Users";
+import { useUsersStore, User } from "stores/Generales/Store_Users";
 import { useEffect, useState } from "react";
 import { useAuthStore } from "stores/Store_Auth";
 import Unauthorized from "components/Resources/Unauthorized";

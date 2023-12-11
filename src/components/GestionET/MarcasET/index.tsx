@@ -1,7 +1,7 @@
 import DataTableWithModal from "components/Resources/DataTableWithModal";
-import { useUsersStore, User } from "stores/Store_Users";
+import { useUsersStore, User } from "stores/Generales/Store_Users";
 import { useEffect, useState } from "react";
-import { MarcaET, useMarcasETStore } from "stores/Store_MarcasET";
+import { MarcaET, useMarcasETStore } from "stores/GestionET/Store_MarcasET";
 import Unauthorized from "components/Resources/Unauthorized";
 
 function MarcasET(): JSX.Element {

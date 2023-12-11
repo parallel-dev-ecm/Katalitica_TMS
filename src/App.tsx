@@ -40,7 +40,7 @@ import brandDark from "assets/images/logo-ct-dark.png";
 import { enableMapSet } from "immer";
 import Cover from "components/Auth/SignIn";
 import { useAuthStore } from "stores/Store_Auth";
-import { currentCompanyStore } from "stores/Store_Company";
+import { currentCompanyStore } from "stores/Generales/Store_Company";
 import PrivateRoute from "components/ProtectedRoute";
 
 enableMapSet();

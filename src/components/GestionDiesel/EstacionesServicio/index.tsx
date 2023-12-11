@@ -1,8 +1,11 @@
 import DataTableWithModal from "components/Resources/DataTableWithModal";
-import { useUsersStore, User } from "stores/Store_Users";
+import { useUsersStore, User } from "stores/Generales/Store_Users";
 import { useEffect, useState } from "react";
 import Unauthorized from "components/Resources/Unauthorized";
-import { useEstacionServicioStore, EstacionServicio } from "stores/Store_EstacionServicio";
+import {
+  useEstacionServicioStore,
+  EstacionServicio,
+} from "stores/GestionDiesel/Store_EstacionServicio";
 
 function CategoriasColaboradores(): JSX.Element {
   const getAllMarcas = useEstacionServicioStore((state) => state.readAllPuestos);

@@ -1,8 +1,8 @@
 import DataTableWithModal from "components/Resources/DataTableWithModal";
-import { useUsersStore, User } from "stores/Store_Users";
+import { useUsersStore, User } from "stores/Generales/Store_Users";
 import { useEffect, useState } from "react";
 import Unauthorized from "components/Resources/Unauthorized";
-import { Puesto, usePuestoStore } from "stores/Store_Puestos";
+import { Puesto, usePuestoStore } from "stores/GestionTalento/Store_Puestos";
 
 function PuestosColaboradores(): JSX.Element {
   const columns = [

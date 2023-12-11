@@ -1,10 +1,10 @@
 import DataTableWithModal from "components/Resources/DataTableWithModal";
-import { useUsersStore, User } from "stores/Store_Users";
+import { useUsersStore, User } from "stores/Generales/Store_Users";
 import { useEffect, useState } from "react";
 import Unauthorized from "components/Resources/Unauthorized";
-import { useTractoresStore, Tractor } from "stores/Store_Tractores";
-import { Remolque, useRemolquesStore } from "stores/Store_Remolques";
-import { Dolly, useDollyStore } from "stores/Store_dollys";
+import { useTractoresStore, Tractor } from "stores/GestionET/Store_Tractores";
+import { Remolque, useRemolquesStore } from "stores/GestionET/Store_Remolques";
+import { Dolly, useDollyStore } from "stores/GestionET/Store_dollys";
 
 function Dollys(): JSX.Element {
   const columns = [
