@@ -85,6 +85,9 @@ import Talleres from "components/Mantenimiento/Talleres";
 import Piezas from "components/Mantenimiento/Piezas";
 import Criterios from "components/Mantenimiento/Criterio";
 import Actividades from "components/Mantenimiento/Actividades";
+import Motivos from "components/Mantenimiento/Motivos";
+import PlanesMantenimiento from "components/Mantenimiento/PlanesMantenimiento";
+import HubodometroCatalogo from "components/Mantenimiento/Hubodometro";
 
 const currentUser = sessionStorage.getItem("userName");
 
@@ -324,6 +327,24 @@ const routes = [
         key: "actividades",
         route: "/Mantenimiento/Actividades",
         component: <Actividades />,
+      },
+      {
+        name: "Motivos",
+        key: "motivos",
+        route: "/Mantenimiento/Motivos",
+        component: <Motivos />,
+      },
+      {
+        name: "Planes Mantenimiento",
+        key: "planesMantenimiento",
+        route: "/Mantenimiento/PlanesMantenimiento",
+        component: <PlanesMantenimiento />,
+      },
+      {
+        name: "Hubodometros",
+        key: "hubodometro",
+        route: "/Mantenimiento/Hubodometros",
+        component: <HubodometroCatalogo />,
       },
     ],
   },

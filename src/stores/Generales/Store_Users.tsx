@@ -38,6 +38,7 @@ const useUsersStore = create<State & Actions>((set, get) => ({
   allUsers: [],
   getUsers: async () => {
     const response = await axiosInstance.get("/company/getAllUsers");
+    
     const parsedData = JSON.parse(response.data.result);
     set({ allUsers: parsedData.Table });
   },
