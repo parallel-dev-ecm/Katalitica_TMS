@@ -3,6 +3,7 @@ import { useUsersStore, User } from "stores/Generales/Store_Users";
 import { useEffect, useState } from "react";
 import Unauthorized from "components/Resources/Unauthorized";
 import { useHubodometroStore, Hubodometro } from "stores/Mantenimiento/Store_Hubodometro";
+import { date } from "yup";
 
 function HubodometroCatalogo(): JSX.Element {
   const getAllMarcas = useHubodometroStore((state) => state.readAllPuestos);
@@ -45,16 +46,26 @@ function HubodometroCatalogo(): JSX.Element {
       console.log("Failed to add.");
     }
   };
-  const generateColumns = (data: Hubodometro): { Header: string; accessor: string }[] => {
-    // Assuming Colaborador is an interface, you can get its keys using Object.keys
-    const colaboradorKeys = Object.keys(data);
-
-    // Dynamically generate the columns array
-    return colaboradorKeys.map((key) => ({
+  const generateColumns = (
+    data: Hubodometro
+  ): { Header: string; accessor: string; Cell?: any }[] => {
+    const hubodometroKeys = Object.keys(data);
+    return hubodometroKeys.map((key) => ({
       Header: key.charAt(0).toUpperCase() + key.slice(1),
       accessor: key,
+      Cell: ({ value }: { value: Date }) => {
+        if (key === "fec_instalacion" || key === "fec_baja") {
+          const dateValue = new Date(value); // Try to convert to Date
+
+          const year = dateValue.getFullYear();
+          return year === 1900 ? "" : dateValue.toLocaleDateString(); // or any custom formatting you prefer
+        } else {
+          return value != null ? value : ""; // Adjust this logic based on the actual types and requirements
+        }
+      },
     }));
   };
+
   const hubodometroModalInputs = [
     { label: "Clave ET", dbName: "clave_et", type: "text" },
     { label: "Tipo ET", dbName: "tipo_et", type: "text" },

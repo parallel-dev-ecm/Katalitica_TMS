@@ -1,3 +1,4 @@
+import { ClaveRequest } from "Interfaces";
 import axiosInstance from "components/Api";
 import { create } from "zustand";
 
@@ -20,8 +21,10 @@ export interface Remolque {
 
 interface State {
   allRemolques: Remolque[];
+  currentId: number | null;
   readAllRemolques: () => Promise<Remolque[] | string>;
   addRemolque: (cC: Remolque) => Promise<Boolean>;
+  getByClave: (clave: ClaveRequest) => Promise<number | null>;
 }
 
 const useRemolquesStore = create<State>((set, get) => ({
@@ -31,7 +34,6 @@ const useRemolquesStore = create<State>((set, get) => ({
     try {
       const response = await axiosInstance.get("/remolques/getAll");
       const parsedData = JSON.parse(response.data.result);
-      console.log(parsedData);
       // Update the state with the fetched data
       set({ allRemolques: parsedData.Table });
     } catch (err) {
@@ -47,6 +49,21 @@ const useRemolquesStore = create<State>((set, get) => ({
       // Handle the error accordingly.
       console.error("Error updating remolque:", error);
       return false;
+    }
+  },
+  currentId: null,
+
+  getByClave: async (clave: ClaveRequest) => {
+    try {
+      const response = await axiosInstance.post("/remolques/getIdFromClave", clave);
+      const result = response.data.result;
+      const parsedString = JSON.parse(result.company);
+      const id = parsedString[0].id;
+      set({ currentId: id });
+      return id;
+    } catch (error) {
+      console.error("Error getting remolque:", error);
+      return "Error getting remolque";
     }
   },
 }));

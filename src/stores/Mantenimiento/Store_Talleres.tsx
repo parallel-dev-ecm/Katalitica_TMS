@@ -22,10 +22,9 @@ const useTalleresStore = create<State>((set, get) => ({
   readAllPuestos: async () => {
     try {
       const response = await axiosInstance.get("/talleres/getAll");
-      console.log(response);
+
       const parsedData = JSON.parse(response.data.result);
 
-      console.log(parsedData);
       // Update the state with the fetched data
       set({ allPuestos: parsedData.Table });
     } catch (err) {

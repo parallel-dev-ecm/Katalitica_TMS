@@ -1,3 +1,4 @@
+import { ClaveRequest } from "Interfaces";
 import axiosInstance from "components/Api";
 import { create } from "zustand";
 
@@ -22,19 +23,22 @@ export interface Tractor {
 }
 
 interface State {
+  currentId: number | null;
+  getByClave: (clave: ClaveRequest) => Promise<number | null>;
+
   allTractores: Tractor[];
   readAllMarcas: () => Promise<Tractor[] | string>;
   addMarca: (cC: Tractor) => Promise<Boolean>;
 }
 
 const useTractoresStore = create<State>((set, get) => ({
+  currentId: null,
   allTractores: [],
 
   readAllMarcas: async () => {
     try {
       const response = await axiosInstance.get("/tractores/getAll");
       const parsedData = JSON.parse(response.data.result);
-      console.log(parsedData);
       // Update the state with the fetched data
       set({ allTractores: parsedData.Table });
     } catch (err) {
@@ -50,6 +54,20 @@ const useTractoresStore = create<State>((set, get) => ({
       // Handle the error accordingly.
       console.error("Error updating MarcasValvulas:", error);
       return false;
+    }
+  },
+
+  getByClave: async (clave: ClaveRequest) => {
+    try {
+      const response = await axiosInstance.post("/tractores/getIdFromClave", clave);
+      const result = response.data.result;
+      const parsedString = JSON.parse(result.company);
+      const id = parsedString[0].id;
+      set({ currentId: id });
+      return id;
+    } catch (error) {
+      console.error("Error getting remolque:", error);
+      return "Error getting remolque";
     }
   },
 }));

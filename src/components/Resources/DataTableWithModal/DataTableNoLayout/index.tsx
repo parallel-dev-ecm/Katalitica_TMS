@@ -39,7 +39,7 @@ interface DataTableWithModalProps {
   onAdd?: (data: any) => void; // Callback when Add is clicked
 }
 
-function DataTableWithModal({
+function DataTableNoLayout({
   title,
   description,
   dataTableData,
@@ -67,8 +67,7 @@ function DataTableWithModal({
   };
 
   return (
-    <DashboardLayout>
-      <DashboardNavbar />
+    <>
       <MDBox pt={6} pb={3}>
         <Card>
           <MDBox
@@ -92,7 +91,7 @@ function DataTableWithModal({
               color="dark"
               onClick={handleOpen}
             >
-              Añadir nuevo
+              Programar
             </MDButton>
           </MDBox>
           <DataTable
@@ -147,12 +146,12 @@ function DataTableWithModal({
               }
             }}
           >
-            Añadir
+            Programar
           </MDButton>
         </DialogActions>
       </Dialog>
-    </DashboardLayout>
+    </>
   );
 }
 
-export default DataTableWithModal;
+export default DataTableNoLayout;

@@ -18,13 +18,15 @@ export interface Company {
 }
 
 type State = {
-  getAllCompanies: () => void;
+  allCompanies: Company[];
   updateData: (company: Company) => void;
   getCompanyById: (id: string) => Promise<Company>;
+  getAllCompanies: () => Promise<Company[]>;
   updateCompanyById: (company: Company) => Promise<Boolean>;
 };
 
 const currentCompanyStore = create<State>((set, get) => ({
+  allCompanies: [],
   getCompanyById: async (Id: string) => {
     try {
       const body = {
@@ -48,6 +50,7 @@ const currentCompanyStore = create<State>((set, get) => ({
     try {
       const response = await axiosInstance.get<any>("/company/getAllCompanies");
       const parsedData = JSON.parse(response.data.result);
+      set({ allCompanies: parsedData.Table });
       return parsedData;
     } catch (error) {}
   },
