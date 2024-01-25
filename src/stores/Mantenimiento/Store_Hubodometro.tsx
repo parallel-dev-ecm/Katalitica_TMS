@@ -1,4 +1,4 @@
-import { ClaveRequest } from "Interfaces";
+import { ClaveRequest, UpdateKmRequest } from "Interfaces";
 import axiosInstance from "components/Api";
 import { create } from "zustand";
 
@@ -20,8 +20,7 @@ interface State {
   readAllPuestos: () => Promise<Hubodometro[] | string>;
   addPuesto: (cC: Hubodometro) => Promise<Boolean>;
   getByClave: (clave: ClaveRequest) => Promise<Hubodometro>;
-  updateKm_actuales: (id: number, km_actuales: number) => Promise<Boolean>;
-  updateKm_totales: (id: number) => Promise<Boolean>;
+  updateKm_totales: (kmReq: UpdateKmRequest) => Promise<Boolean>;
 }
 
 const useHubodometroStore = create<State>((set, get) => ({
@@ -30,10 +29,7 @@ const useHubodometroStore = create<State>((set, get) => ({
   readAllPuestos: async () => {
     try {
       const response = await axiosInstance.get("/hubodometro/getAll");
-      console.log(response);
       const parsedData = JSON.parse(response.data.result);
-
-      console.log(parsedData);
       // Update the state with the fetched data
       set({ allPuestos: parsedData.Table });
     } catch (err) {
@@ -52,39 +48,28 @@ const useHubodometroStore = create<State>((set, get) => ({
     }
   },
   getByClave: async (clave: ClaveRequest) => {
-    console.log(clave.clave);
     const response = await axiosInstance.post("/hubodometro/getIdFromClave", clave);
-    console.log(response);
     const result = response.data.result;
     const parsedString = JSON.parse(result.company);
     set({ currentHubodometro: parsedString[0] });
     const currentHub = get().currentHubodometro;
     return currentHub;
   },
-  updateKm_actuales: async (id: number, km_actuales: number) => {
-    try {
-      const response = await axiosInstance.post("/hubodometro/updateKmActuales", {
-        id,
-        km_actuales,
-      });
-      return true;
-    } catch (err) {
-      console.error("Error fetching Motivo: ", err);
-      return false;
-    }
-  },
+  
   // Fixed code...
 
-  updateKm_totales: async (id: number) => {
-    try {
-      const response = await axiosInstance.post("/hubodometro/updateKmTotales", id);
-      console.log(response);
-      return true;
-    } catch (err) {
-      console.error("Error fetching Motivo: ", err);
+  updateKm_totales: async (kmReq: UpdateKmRequest) => {
+    
+      try {
+      const response = await axiosInstance.post("/hubodometro/updateKmTotales", kmReq);
+      console.log('Response:', response.data);
+      return response.data.success;
+    } catch (err : any) {
+      console.error("Error updating km : ", err);
       return false;
     }
   },
-})); // Remove this parenthesis
+})); 
 
 export { useHubodometroStore };
+

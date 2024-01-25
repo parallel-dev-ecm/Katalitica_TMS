@@ -89,6 +89,7 @@ import Motivos from "components/Mantenimiento/Motivos";
 import PlanesMantenimiento from "components/Mantenimiento/PlanesMantenimiento";
 import HubodometroCatalogo from "components/Mantenimiento/Hubodometro";
 import OrdenMantenimientoIndex from "components/Mantenimiento/OrdenMantenimiento";
+import CreateOrdenMantenimientoIndex from "components/Mantenimiento/OrdenMantenimiento/CreateOrden";
 
 const currentUser = sessionStorage.getItem("userName");
 
@@ -348,10 +349,16 @@ const routes = [
         component: <HubodometroCatalogo />,
       },
       {
-        name: "Nueva orden de reparación",
-        key: "newOrdenReparacion",
-        route: "/Mantenimiento/CrearOrdenReparacion",
+        name: "Ordenes de reparación",
+        key: "OrdenReparacion",
+        route: "/Mantenimiento/OrdenesReparacion",
         component: <OrdenMantenimientoIndex />,
+      },
+      {
+        name: "Crear orden de reparación",
+        key: "crearOrdenReparacion",
+        route: "/Mantenimiento/CrearOrdenesReparacion",
+        component: <CreateOrdenMantenimientoIndex />,
       },
     ],
   },

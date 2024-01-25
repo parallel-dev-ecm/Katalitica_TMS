@@ -5,14 +5,14 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 
 type Props = {};
 
-function OrdenMantenimientoIndex({}: Props) {
+function CreateOrdenMantenimientoIndex({}: Props) {
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <br />
-      <GetOrdenMantenimiento />
+      <OrdenMantenimientoForm />
     </DashboardLayout>
   );
 }
 
-export default OrdenMantenimientoIndex;
+export default CreateOrdenMantenimientoIndex;

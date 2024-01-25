@@ -1,3 +1,4 @@
+import { ClaveRequest } from "Interfaces";
 import axiosInstance from "components/Api";
 import { create } from "zustand";
 
@@ -34,18 +35,30 @@ interface State {
   allPuestos: Colaborador[];
   readAllPuestos: () => Promise<Colaborador[] | string>;
   addPuesto: (cC: Colaborador) => Promise<Boolean>;
+  getIdFromName: (name: string) => Promise<number>;
+
 }
 
 const useColaboradoresStore = create<State>((set, get) => ({
   allPuestos: [],
+  getIdFromName: async (name: string) => {
+    try {
+      const body: ClaveRequest = {
+        clave: name,
+      };
+      const response = await axiosInstance.post<any>("/colaboradores/getIdFromName", body);
+      const id = JSON.parse(response.data.result.company)
+      return id[0].id
+    } catch (error) {
+      console.error("Error colab:", error);
+      return 0;
+    }
+  },
 
   readAllPuestos: async () => {
     try {
       const response = await axiosInstance.get("/colaboradores/getAll");
-      console.log(response);
       const parsedData = JSON.parse(response.data.result);
-
-      console.log(parsedData);
       // Update the state with the fetched data
       set({ allPuestos: parsedData.Table });
     } catch (err) {

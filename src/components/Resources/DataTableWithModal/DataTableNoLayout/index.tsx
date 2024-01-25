@@ -22,6 +22,7 @@ import DataTable from "examples/Tables/DataTable";
 import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
 import { Grid } from "@mui/material";
+import buttonText from "assets/theme/components/button/text";
 
 interface InputProps {
   label: string;
@@ -31,6 +32,7 @@ interface InputProps {
 
 interface DataTableWithModalProps {
   title: string;
+  buttonText?: string;
   dialogTitle?: string;
   buttonEditable?: boolean;
   modalInputs?: InputProps[];
@@ -46,6 +48,7 @@ function DataTableNoLayout({
   dialogTitle,
   modalInputs,
   onAdd,
+  buttonText,
   buttonEditable,
 }: DataTableWithModalProps): JSX.Element {
   const [open, setOpen] = useState(false);
@@ -85,14 +88,14 @@ function DataTableNoLayout({
                 {description}
               </MDTypography>
             </Box>
-            <MDButton
+            {/* <MDButton
               disabled={!buttonEditable}
               variant="gradient"
               color="dark"
               onClick={handleOpen}
             >
-              Programar
-            </MDButton>
+              {buttonText}
+            </MDButton> */}
           </MDBox>
           <DataTable
             table={{
@@ -104,52 +107,7 @@ function DataTableNoLayout({
           />
         </Card>
       </MDBox>
-      <Footer />
-
-      <Dialog open={open} onClose={handleClose} style={{ marginBottom: "8px" }}>
-        <DialogTitle>{dialogTitle}</DialogTitle>
-        <DialogContent>
-          {modalInputs &&
-            modalInputs.map((input, index) => (
-              <Grid container spacing={2} key={index}>
-                <Grid item xs={12} sm={6}>
-                  <p style={{ color: "black", marginBottom: "1px", opacity: "50%" }}>
-                    {input.label}
-                  </p>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <MDInput
-                    margin="dense"
-                    inputProps={{
-                      style: { color: "black" },
-                      value: formData[input.dbName] || "",
-                      onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-                        handleInputChange(input.dbName, e.target.value),
-                    }}
-                    type={input.type || "text"}
-                    fullWidth
-                  />
-                </Grid>
-              </Grid>
-            ))}
-        </DialogContent>
-        <DialogActions>
-          <MDButton onClick={handleClose} color="dark">
-            Cancelar
-          </MDButton>
-          <MDButton
-            variant="gradient"
-            color="dark"
-            onClick={() => {
-              if (onAdd) {
-                onAdd(formData);
-              }
-            }}
-          >
-            Programar
-          </MDButton>
-        </DialogActions>
-      </Dialog>
+      {/* <Footer /> */}
     </>
   );
 }
