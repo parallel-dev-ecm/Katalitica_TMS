@@ -956,6 +956,7 @@ function OrdenMantenimientoForm() {
                           if (tractorReq.kms != null) {
                             if (tractorReq.kms > 700000) {
                               tractorReq.kms = 0;
+                              console.log('')
                             }
                             const remolquePlanMantenimiento = await getByETAndKms(tractorReq);
                             setTractorPlanesMantenimiento(remolquePlanMantenimiento);
