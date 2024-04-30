@@ -2,6 +2,7 @@ import axiosInstance from "components/Api";
 import { create } from "zustand";
 
 export interface LlantasCatalogoInterface {
+  id: number;
   clavell: string;
   clave_et: string;
   posicion: string;
@@ -17,6 +18,7 @@ export interface LlantasCatalogoInterface {
   id_tipopiso: number;
   id_medidall: number;
   id_estatusll: number;
+  milimetros_act?: string;
 }
 
 interface State {

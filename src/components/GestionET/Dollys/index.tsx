@@ -9,6 +9,8 @@ import {
   type MRT_Cell,
   createMRTColumnHelper,
 } from "material-react-table";
+import { mkConfig, generateCsv, download } from "export-to-csv"; //or use your library of choice here
+
 import { useGeneralesStore } from "stores/Generales/Store_Generales";
 import { UpdateTableDynamically } from "Interfaces";
 import { Box, Button } from "@mui/material";
@@ -20,6 +22,9 @@ import EditableDataTable from "components/Resources/EditableDataTable";
 function Dollys(): JSX.Element {
   const updateTable = useGeneralesStore((state) => state.updateTable);
   const tableName = "KataliticaTMS_Test.GestionET.Dollys";
+  const csvConfig = mkConfig({
+    useKeysAsHeaders: true,
+  });
   const columns = [
     { Header: "Clave", accessor: "clave" },
     { Header: "Nombre Largo", accessor: "nombre_largo" },
@@ -175,15 +180,19 @@ function Dollys(): JSX.Element {
       console.log("Failed to add.");
     }
   };
-  const handleExportRows = (rows: MRT_Row<Dolly>[], tableTitle?: string) => {
+
+  const handleExportRows = (rows: any, tableTitle?: string) => {
     const orientation = "portrait"; // portrait or landscape
     const setMaxSize = "10";
     const styles = { pageBreak: "auto" };
     const doc = new jsPDF(orientation);
-    console.log(rows);
-    const tableData = rows.map((row) => Object.values(row.original));
-    console.log(columns);
+    const tableData = rows.map((row: any) => Object.values(row.original));
     const tableHeaders = columnsET.map((c) => c.header);
+    const rowData = rows.map((row: any) => row.original);
+    console.log(rowData);
+    const csv = generateCsv(csvConfig)(rowData);
+    download(csvConfig)(csv);
+
     if (tableTitle) {
       doc.text(tableTitle, 15, 10);
     }

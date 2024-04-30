@@ -41,9 +41,16 @@ export interface MecanicoHoras {
   horas?: string;
 }
 
+export interface PlanMantenimientoDetalles {
+  id?: number;
+  clave_plan?: string;
+  descripcion?: string;
+  identificador?: string;
+}
+
 interface State {
-  allPuestos: PlanMantenimiento[];
-  readAllPuestos: () => Promise<PlanMantenimiento[] | string>;
+  allPuestosDetalles: PlanMantenimientoDetalles[];
+  readAllPuestosDetalles: () => Promise<PlanMantenimientoDetalles[] | string>;
   addPuesto: (cC: PlanMantenimiento) => Promise<boolean>;
   getPlanesByETandKms: (req: KmReq) => Promise<PlanMantenimiento[]>;
   getPlanesByETandKmsLessColumns: (req: KmReq) => Promise<PlanMantenimiento[]>;
@@ -53,9 +60,23 @@ interface State {
   getIdByDescripcion: (req: DescripcionRequest) => Promise<number>;
   getUniqueActividades: () => Promise<string[]>;
   uniqueActividades: string[];
+  allPuestos: PlanMantenimiento[];
+  readAllPuestos: () => Promise<PlanMantenimiento[] | string>;
 }
 
 const usePlanesMantenimientoStore = create<State>((set, get) => ({
+  allPuestosDetalles: [],
+  readAllPuestosDetalles: async () => {
+    try {
+      const response = await axiosInstance.get("/planesMantenimiento/getAllPlanesDetalles");
+      const parsedData = JSON.parse(response.data.result);
+      set({ allPuestosDetalles: parsedData.Table });
+      return parsedData.Table;
+    } catch (err) {
+      console.error("Error fetching Motivo: ", err);
+      return "Error fetching Motivo";
+    }
+  },
   allPuestos: [],
   uniqueActividades: [],
   updateMecanico: async (req: MecanicoHoras) => {

@@ -101,9 +101,7 @@ function Sidenav(): JSX.Element {
         p={2}
         m={0}
         sx={{ listStyle: "none" }}
-      >
-        <TruckScene />
-      </MDBox>
+      ></MDBox>
     </Card>
   );
 }

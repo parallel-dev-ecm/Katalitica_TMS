@@ -5,6 +5,7 @@ import Unauthorized from "components/Resources/Unauthorized";
 import {
   usePlanesMantenimientoStore,
   PlanMantenimiento,
+  PlanMantenimientoDetalles,
 } from "stores/Mantenimiento/Store_PlanesMantenimiento";
 
 import { Box, Button, Grid } from "@mui/material";
@@ -20,6 +21,8 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 function PlanesMantenimiento(): JSX.Element {
   const getAllMarcas = usePlanesMantenimientoStore((state) => state.readAllPuestos);
   const allCC = usePlanesMantenimientoStore((state) => state.allPuestos);
+  const getAllDetalles = usePlanesMantenimientoStore((state) => state.readAllPuestosDetalles);
+  const allDetalles = usePlanesMantenimientoStore((state) => state.allPuestosDetalles);
   const postCC = usePlanesMantenimientoStore((state) => state.addPuesto);
   const fetchUserApi = useUsersStore((state) => state.getUsers);
   const allUsers = useUsersStore((state) => state.allUsers);
@@ -29,6 +32,7 @@ function PlanesMantenimiento(): JSX.Element {
 
   useEffect(() => {
     getAllMarcas();
+    getAllDetalles();
   }, []);
 
   useEffect(() => {
@@ -71,6 +75,18 @@ function PlanesMantenimiento(): JSX.Element {
       accessor: key,
     }));
   };
+  const generateColumnsDetalles = (
+    data: PlanMantenimientoDetalles
+  ): { Header: string; accessor: string }[] => {
+    // Assuming Colaborador is an interface, you can get its keys using Object.keys
+    const colaboradorKeys = Object.keys(data);
+
+    // Dynamically generate the columns array
+    return colaboradorKeys.map((key) => ({
+      Header: key.charAt(0).toUpperCase() + key.slice(1),
+      accessor: key,
+    }));
+  };
 
   const modalInputs = [
     { label: "Clave plan", dbName: "cve_plan", type: "text" },
@@ -86,6 +102,9 @@ function PlanesMantenimiento(): JSX.Element {
 
   // Assuming allCC is an array of Colaborador objects
   const columns = generateColumns(allCC.length > 0 ? allCC[0] : ({} as PlanMantenimiento));
+  const columnsDetalles = generateColumnsDetalles(
+    allDetalles.length > 0 ? allDetalles[0] : ({} as PlanMantenimientoDetalles)
+  );
   const columnHelper = createMRTColumnHelper<PlanMantenimiento>();
 
   const columnsET = [
@@ -196,18 +215,22 @@ function PlanesMantenimiento(): JSX.Element {
       {authorizedToRead && (
         <DashboardLayout>
           <DashboardNavbar />
-          <Grid container spacing={3}>
-            <DataTableNoLayout
-              dialogTitle="Añadir nuevo plan de mantenimiento."
-              title="Planes de Mantenimiento"
-              dataTableData={{ rows: allCC, columns: columns }} // Pass the state to the prop.
-              description="Información general de los planes de mantenimiento"
-              buttonEditable={authorizedToWrite}
-              modalInputs={modalInputs}
-              buttonText="Add new"
-              onAdd={handleAddCentroCostos}
-            />
-          </Grid>
+          <DataTableNoLayout
+            title="Detalles de Mantenimiento"
+            dataTableData={{ rows: allDetalles, columns: columnsDetalles }} // Pass the state to the prop.
+            description="Detalles de los planes de mantenimiento"
+            buttonEditable={false}
+          />
+          <DataTableNoLayout
+            dialogTitle="Añadir nuevo plan de mantenimiento."
+            title="Planes de Mantenimiento"
+            dataTableData={{ rows: allCC, columns: columns }} // Pass the state to the prop.
+            description="Información general de los planes de mantenimiento"
+            buttonEditable={authorizedToWrite}
+            modalInputs={modalInputs}
+            buttonText="Add new"
+            onAdd={handleAddCentroCostos}
+          />
         </DashboardLayout>
       )}
 

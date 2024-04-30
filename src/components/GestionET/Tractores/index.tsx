@@ -16,8 +16,12 @@ import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { jsPDF } from "jspdf"; //or use your library of choice here
 import autoTable from "jspdf-autotable";
 import EditableDataTable from "components/Resources/EditableDataTable";
+import { mkConfig, generateCsv, download } from "export-to-csv"; //or use your library of choice here
 
 function Tractores(): JSX.Element {
+  const csvConfig = mkConfig({
+    useKeysAsHeaders: true,
+  });
   const updateTable = useGeneralesStore((state) => state.updateTable);
   const tableName = "KataliticaTMS_Test.GestionET.Tractores";
   const columns = [
@@ -117,9 +121,10 @@ function Tractores(): JSX.Element {
     const setMaxSize = "10";
     const styles = { pageBreak: "auto" };
     const doc = new jsPDF(orientation);
-    console.log(rows);
     const tableData = rows.map((row) => Object.values(row.original));
-    console.log(columns);
+    const rowData = rows.map((row: any) => row.original);
+    const csv = generateCsv(csvConfig)(rowData);
+    download(csvConfig)(csv);
     const tableHeaders = columnsET.map((c) => c.header);
     if (tableTitle) {
       doc.text(tableTitle, 15, 10);

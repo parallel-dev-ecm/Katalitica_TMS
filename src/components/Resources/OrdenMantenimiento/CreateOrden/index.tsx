@@ -1,6 +1,7 @@
 import React, {
   ChangeEvent,
   ReactElement,
+  SyntheticEvent,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -41,6 +42,7 @@ import {
 import { useActividadesStore } from "stores/Mantenimiento/Store_Actividades";
 import DataTableWithModal from "components/Resources/DataTableWithModal";
 import { NuevaReparacion } from "./NuevaReparacion";
+import { E } from "@fullcalendar/core/internal-common";
 
 function OrdenMantenimientoForm() {
   // Function component code here
@@ -587,14 +589,17 @@ function OrdenMantenimientoForm() {
                   <Autocomplete
                     options={EstatusOptions}
                     disabled={disabled}
+                    onChange={async (event, newValue) => {
+                      if (newValue) {
+                        setEstatus(newValue);
+                        console.log(estatus);
+                      }
+                    }}
                     renderInput={(params) => (
                       <FormField
                         variant="outlined"
                         {...params}
                         label="Estatus"
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                          setEstatus(e.target.value);
-                        }}
                         InputLabelProps={{ shrink: true }}
                       />
                     )}
@@ -956,7 +961,7 @@ function OrdenMantenimientoForm() {
                           if (tractorReq.kms != null) {
                             if (tractorReq.kms > 700000) {
                               tractorReq.kms = 0;
-                              console.log('')
+                              console.log("");
                             }
                             const remolquePlanMantenimiento = await getByETAndKms(tractorReq);
                             setTractorPlanesMantenimiento(remolquePlanMantenimiento);

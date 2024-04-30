@@ -17,8 +17,12 @@ import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { jsPDF } from "jspdf"; //or use your library of choice here
 import autoTable from "jspdf-autotable";
 import EditableDataTable from "components/Resources/EditableDataTable";
+import { mkConfig, generateCsv, download } from "export-to-csv"; //or use your library of choice here
 
 function Remolques(): JSX.Element {
+  const csvConfig = mkConfig({
+    useKeysAsHeaders: true,
+  });
   const updateTable = useGeneralesStore((state) => state.updateTable);
   const tableName = "KataliticaTMS_Test.GestionET.Remolques";
 
@@ -116,6 +120,9 @@ function Remolques(): JSX.Element {
     const setMaxSize = "10";
     const styles = { pageBreak: "auto" };
     const doc = new jsPDF(orientation);
+    const rowData = rows.map((row: any) => row.original);
+    const csv = generateCsv(csvConfig)(rowData);
+    download(csvConfig)(csv);
     const tableData = rows.map((row) => Object.values(row.original));
     const tableHeaders = columnsET.map((c) => c.header);
     if (tableTitle) {

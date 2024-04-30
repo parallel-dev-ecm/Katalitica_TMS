@@ -97,6 +97,7 @@ import TiposPisoLlantas from "components/Llantas/TiposDePiso";
 import MedidasLlantas from "components/Llantas/Medidas";
 import EstatusLlantas from "components/Llantas/Estatus";
 import LlantasCatalogo from "components/Llantas/LlantasCatalogo";
+import MovimientoLlantas from "components/Llantas/MovimientoLlantas";
 
 const currentUser = sessionStorage.getItem("userName");
 
@@ -386,6 +387,12 @@ const routes = [
         key: "modelos",
         route: "/Llantas/Modelos",
         component: <ModelosLlantas />,
+      },
+      {
+        name: "Movimiento",
+        key: "movimiento",
+        route: "/Llantas/Movimiento",
+        component: <MovimientoLlantas />,
       },
       {
         name: "Tipo de Piso",

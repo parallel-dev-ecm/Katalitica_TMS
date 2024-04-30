@@ -41,7 +41,7 @@ const ordenReparacionStore = create<State>((set, get) => ({
       folio: folio,
     };
     try {
-      console.log(body)
+      console.log(body);
       const response = await axiosInstance.post("/ordenReparacion/getOrdenByFolio", body);
 
       if (response.data && response.data.result) {
@@ -75,6 +75,7 @@ const ordenReparacionStore = create<State>((set, get) => ({
   },
   postOrden: async (ordenReparacion: OrdenReparacionInterface) => {
     try {
+      console.log(ordenReparacion);
       const response = await axiosInstance.post(
         "/ordenReparacion/postOrdenReparacion",
         ordenReparacion
