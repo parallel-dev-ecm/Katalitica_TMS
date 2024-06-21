@@ -43,6 +43,7 @@ const useLlantasCatalogoStore = create<State>((set, get) => ({
   },
   addData: async (cC: LlantasCatalogoInterface, route: string) => {
     try {
+      console.log("cC: ", cC);
       const response = await axiosInstance.post(route, cC);
       return true;
     } catch (error) {

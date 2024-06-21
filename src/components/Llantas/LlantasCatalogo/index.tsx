@@ -78,7 +78,7 @@ function LlantasCatalogo(): JSX.Element {
     const isSuccess = await postCC(data, pushPath);
     console.log(data);
     if (isSuccess) {
-      document.location.reload();
+      //document.location.reload();
     } else {
       console.log("Failed to add.");
     }
@@ -102,13 +102,23 @@ function LlantasCatalogo(): JSX.Element {
           table: MRT_TableInstance<LlantasCatalogoInterface>;
         }) => ({
           onBlur: (event: React.FocusEvent<HTMLTextAreaElement | HTMLInputElement, Element>) => {
-            const req: UpdateTableDynamically = {
-              id: row.original.id,
-              tableName: tableName,
-              value: event.target.value,
-              columnName: column.accessor,
-            };
-            updateTable(req);
+            const stringArray: string[] = ["milimetros", "kms_ant", "kms_act", "presion"];
+            console.log(column.accessor);
+            const isInArray: boolean = stringArray.includes(column.accessor);
+
+            if (isInArray) {
+              const req: UpdateTableDynamically = {
+                id: row.original.id,
+                tableName: tableName,
+                value: event.target.value,
+                columnName: column.accessor,
+              };
+              updateTable(req);
+            } else {
+              console.log("not updated");
+              return;
+            }
+
             //validate data
             //save data to api and/or rerender table
             // table.setEditingCell(null) is called automatically onBlur internally

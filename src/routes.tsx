@@ -98,6 +98,7 @@ import MedidasLlantas from "components/Llantas/Medidas";
 import EstatusLlantas from "components/Llantas/Estatus";
 import LlantasCatalogo from "components/Llantas/LlantasCatalogo";
 import MovimientoLlantas from "components/Llantas/MovimientoLlantas";
+import MotivosLlantasIndex from "components/Llantas/Motivos";
 
 const currentUser = sessionStorage.getItem("userName");
 
@@ -417,6 +418,12 @@ const routes = [
         key: "llantas",
         route: "/Llantas/Llantas",
         component: <LlantasCatalogo />,
+      },
+      {
+        name: "Motivos",
+        key: "MotivosLlantas",
+        route: "/Llantas/Motivos",
+        component: <MotivosLlantasIndex />,
       },
     ],
   },

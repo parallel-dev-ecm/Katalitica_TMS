@@ -28,9 +28,13 @@ import EditableDataTable from "components/Resources/EditableDataTable";
 import { mkConfig, generateCsv, download } from "export-to-csv";
 import EditableDataTableNoLayout from "components/Resources/EditableTableNoLayout";
 import gsap from "gsap";
+import { useMarcasLlantasStore } from "stores/Llantas/Marcas";
 type Props = {};
 
 function MovimientoLlantasIndex({}: Props) {
+  const getDescripcionesMarcas = useMarcasLlantasStore((state) => state.getOnlyDescripciones);
+  const getIdByDescripciones = useMarcasLlantasStore((state) => state.getIdByDescription);
+
   const EditableDataTableRef = useRef(null);
   const allData = useMovimientoLlantasStore((state) => state.allData);
   const readAllData = useMovimientoLlantasStore((state) => state.readAllData);
@@ -53,6 +57,14 @@ function MovimientoLlantasIndex({}: Props) {
 
     readAllData(readPath);
   });
+
+  const getDescripciones = async () => {
+    console.log(await getDescripcionesMarcas());
+  };
+
+  useEffect(() => {
+    getDescripciones();
+  }, []);
 
   const columns = generateColumns(allData.length > 0 ? allData[0] : ({} as MovimientoLlantas));
 

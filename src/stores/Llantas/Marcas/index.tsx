@@ -1,3 +1,4 @@
+import { DescripcionRequest } from "Interfaces";
 import axiosInstance from "components/Api";
 import { create } from "zustand";
 
@@ -11,6 +12,8 @@ interface State {
   allData: Llanta[];
   readAllData: (route: string) => Promise<Llanta[] | string>;
   addData: (cC: Llanta, route: string) => Promise<Boolean>;
+  getOnlyDescripciones: () => Promise<string[]>;
+  getIdByDescription: (description: DescripcionRequest) => Promise<number>;
 }
 
 const useMarcasLlantasStore = create<State>((set, get) => ({
@@ -27,6 +30,29 @@ const useMarcasLlantasStore = create<State>((set, get) => ({
       return "Error fetching MarcasET";
     }
   },
+  getOnlyDescripciones: async () => {
+    try {
+      const response = await axiosInstance.get("/llantas/getDescripcionesMarcasLlantas");
+      const parsedData = JSON.parse(response.data.result);
+      // Update the state with the fetched data
+      return parsedData.Table;
+    } catch (err) {
+      console.error("Error fetching MarcasET: ", err);
+      return [];
+    }
+  },
+  getIdByDescription: async (description: DescripcionRequest) => {
+    try {
+      const response = await axiosInstance.post("/llantas/getIdByDescripciones", description);
+      const parsedData = JSON.parse(response.data.result);
+      // Update the state with the fetched data
+      return parsedData.Table[0].id;
+    } catch (err) {
+      console.error("Error fetching MarcasET: ", err);
+      return -1;
+    }
+  },
+
   addData: async (cC: Llanta, route: string) => {
     try {
       const response = await axiosInstance.post(route, cC);
