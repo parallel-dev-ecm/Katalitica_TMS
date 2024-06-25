@@ -22,7 +22,7 @@ interface State {
   getByClave: (clave: ClaveRequest) => Promise<number | null>;
 
   allDollys: Dolly[];
-  readAllDollys: () => Promise<Dolly[] | string>;
+  readAllDollys: () => Promise<Dolly[]>;
   addDoly: (cC: Dolly) => Promise<Boolean>;
 }
 
@@ -38,6 +38,7 @@ const useDollyStore = create<State>((set, get) => ({
 
       // Update the state with the fetched data
       set({ allDollys: parsedData.Table });
+      return parsedData.Table;
     } catch (err) {
       console.error("Error fetching dollys: ", err);
       return "Error fetching dollys";

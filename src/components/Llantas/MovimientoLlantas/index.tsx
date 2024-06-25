@@ -1,15 +1,11 @@
 import Footer from "examples/Footer";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import React, { useEffect, useRef } from "react";
-import DataTable from "examples/Tables/DataTable";
+import React, { useEffect, useRef, useState } from "react";
 import { Box } from "@mui/system";
 // Data
 import MDButton from "components/MDButton";
 import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import Card from "@mui/material/Card";
-import MovLlantasScene from "components/Three-Fiber/MovimientoLlantasScene/MovLlantaScene";
 import { MovimientoLlantas, useMovimientoLlantasStore } from "stores/Llantas/MovimientoLlantas";
 import {
   useMaterialReactTable,
@@ -19,21 +15,37 @@ import {
   createMRTColumnHelper,
 } from "material-react-table";
 import { useGeneralesStore } from "stores/Generales/Store_Generales";
-import { UpdateTableDynamically } from "Interfaces";
+import { DescripcionRequest, UpdateTableDynamically } from "Interfaces";
 import { Button, Grid } from "@mui/material";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { jsPDF } from "jspdf"; //or use your library of choice here
 import autoTable from "jspdf-autotable";
-import EditableDataTable from "components/Resources/EditableDataTable";
 import { mkConfig, generateCsv, download } from "export-to-csv";
 import EditableDataTableNoLayout from "components/Resources/EditableTableNoLayout";
 import gsap from "gsap";
 import { useMarcasLlantasStore } from "stores/Llantas/Marcas";
+import { Dolly, useDollyStore } from "stores/GestionET/Store_dollys";
+import { Remolque, useRemolquesStore } from "stores/GestionET/Store_Remolques";
+import { Tractor, useTractoresStore } from "stores/GestionET/Store_Tractores";
+import { options } from "dropzone";
+
 type Props = {};
 
 function MovimientoLlantasIndex({}: Props) {
+  const getAllDollys = useDollyStore((state) => state.readAllDollys);
+  const getAllRemolques = useRemolquesStore((state) => state.readAllRemolques);
+  const getAllTractores = useTractoresStore((state) => state.readAllMarcas);
+  const allDollys = useDollyStore((state) => state.allDollys);
+  const allTractores = useTractoresStore((state) => state.allTractores);
+  const allRemolques = useRemolquesStore((state) => state.allRemolques);
+
   const getDescripcionesMarcas = useMarcasLlantasStore((state) => state.getOnlyDescripciones);
   const getIdByDescripciones = useMarcasLlantasStore((state) => state.getIdByDescription);
+  const descripcionesArray: string[] = [];
+  const [getDes, setDesc] = useState<string[]>([]);
+  const [clavesDollyState, setClavesDolly] = useState<string[]>([]);
+  const [clavesRemolqueState, setClavesRemolque] = useState<string[]>([]);
+  const [clavesTractorState, setClavesTractor] = useState<string[]>([]);
 
   const EditableDataTableRef = useRef(null);
   const allData = useMovimientoLlantasStore((state) => state.allData);
@@ -52,26 +64,61 @@ function MovimientoLlantasIndex({}: Props) {
       accessor: key,
     }));
   };
+
+  const getTractorByClave = useTractoresStore((state) => state.getByClave);
+  const getDollyFromClave = useDollyStore((state) => state.getByClave);
+  const getRemolqueByClave = useRemolquesStore((state) => state.getByClave);
+
+  const clavesDolly: string[] = [];
+  const clavesTractor: string[] = [];
+  const clavesRemolque: string[] = [];
+
   useEffect(() => {
     const readPath = "/movimientoLlantas/getAllMovimientoLlantas";
 
     readAllData(readPath);
   });
+  useEffect(() => {
+    getAllDollys();
+    getAllRemolques();
+    getAllTractores();
+  });
 
   const getDescripciones = async () => {
-    console.log(await getDescripcionesMarcas());
-  };
+    const descripciones = await getDescripcionesMarcas();
 
-  useEffect(() => {
-    getDescripciones();
-  }, []);
+    descripciones.map((descripcion: any) => {
+      setDesc((prevState) => [...prevState, descripcion.descripcion]);
+    });
+
+    allDollys.map((clave: any) => {
+      setClavesDolly((prevState) => [...prevState, clave.clave]);
+    });
+
+    allRemolques.map((clave: any) => {
+      setClavesRemolque((prevState) => [...prevState, clave.clave]);
+    });
+    allTractores.map((clave: any) => {
+      setClavesTractor((prevState) => [...prevState, clave.clave]);
+    });
+  };
+  getDescripciones();
+
+  const onChangeGetId = async (event: any, newValue: any) => {
+    const req: DescripcionRequest = {
+      descripcion: newValue,
+    };
+    const id = await getIdByDescripciones(req);
+    return id;
+  };
 
   const columns = generateColumns(allData.length > 0 ? allData[0] : ({} as MovimientoLlantas));
 
   const pushPath = "/movimientoLlantas/postMovimientoLlanta";
   const handleAddCentroCostos = async (data: MovimientoLlantas) => {
-    const isSuccess = await postCC(data, pushPath);
     console.log(data);
+
+    const isSuccess = await postCC(data, pushPath);
     if (isSuccess) {
       document.location.reload();
     } else {
@@ -173,6 +220,7 @@ function MovimientoLlantasIndex({}: Props) {
       </Box>
     ),
   });
+
   const modalInputs = [
     { label: "Número de Orden", dbName: "num_orden", type: "string" },
     { label: "Fecha", dbName: "fecha", type: "date" },
@@ -180,19 +228,42 @@ function MovimientoLlantasIndex({}: Props) {
     { label: "Número Montada", dbName: "num_montada", type: "string" },
     { label: "DOT Montada", dbName: "dot_montada", type: "string" },
     { label: "MM Montada", dbName: "mm_montada", type: "string" },
-    { label: "Marca Montada", dbName: "marca_montada", type: "string" },
+    {
+      label: "Marca Montada",
+      dbName: "marca_montada",
+      type: "dropdown",
+      options: getDes,
+      func: onChangeGetId,
+    },
     { label: "Piso Montada", dbName: "piso_montada", type: "string" },
     { label: "Motivo Montada", dbName: "motivo_montada", type: "string" },
     { label: "Destino Montada", dbName: "destino_montada", type: "string" },
     { label: "Número Montadar", dbName: "num_montadar", type: "string" },
     { label: "DOT Montadar", dbName: "dot_montadar", type: "string" },
     { label: "MM Montadar", dbName: "mm_montadar", type: "string" },
-    { label: "Marca Montadar", dbName: "marca_montadar", type: "string" },
     { label: "Piso Montadar", dbName: "piso_montadar", type: "string" },
     { label: "ID Estatus", dbName: "id_estatus", type: "string" },
-    { label: "ID Dolly", dbName: "id_dolly", type: "string" },
-    { label: "ID Remolque", dbName: "id_remolque", type: "string" },
-    { label: "ID Tractor", dbName: "id_tractor", type: "string" },
+    {
+      label: "ID Dolly",
+      dbName: "id_dolly",
+      type: "dropdown",
+      options: clavesDollyState,
+      func: getDollyFromClave,
+    },
+    {
+      label: "ID Remolque",
+      dbName: "id_remolque",
+      type: "dropdown",
+      options: clavesRemolqueState,
+      func: getRemolqueByClave,
+    },
+    {
+      label: "ID Tractor",
+      dbName: "id_tractor",
+      type: "dropdown",
+      options: clavesTractorState,
+      func: getTractorByClave,
+    },
     { label: "ID Llanta", dbName: "id_llanta", type: "string" },
   ];
 
@@ -245,6 +316,8 @@ function MovimientoLlantasIndex({}: Props) {
             table={table}
             onAdd={handleAddCentroCostos}
             modalInputs={modalInputs}
+            inputData={allData}
+            dropDownFunc={onChangeGetId}
           />
         </div>
       </DashboardLayout>

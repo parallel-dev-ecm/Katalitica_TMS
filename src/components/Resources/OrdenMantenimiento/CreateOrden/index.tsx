@@ -98,6 +98,7 @@ function OrdenMantenimientoForm() {
   const getTractorByClave = useTractoresStore((state) => state.getByClave);
   const getDollyFromClave = useDollyStore((state) => state.getByClave);
   const allRemolques = useRemolquesStore((state) => state.allRemolques);
+  
   const inputData = { allDollys, allTractores, allRemolques, allTalleres, allCompanies };
   // State variables for each form field
   const [compania, setCompania] = useState<string>(null);

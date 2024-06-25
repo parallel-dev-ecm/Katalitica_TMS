@@ -43,10 +43,12 @@ const useMarcasLlantasStore = create<State>((set, get) => ({
   },
   getIdByDescription: async (description: DescripcionRequest) => {
     try {
+      console.log(description);
       const response = await axiosInstance.post("/llantas/getIdByDescripciones", description);
       const parsedData = JSON.parse(response.data.result);
+      console.log(parsedData);
       // Update the state with the fetched data
-      return parsedData.Table[0].id;
+      return parsedData[0].id;
     } catch (err) {
       console.error("Error fetching MarcasET: ", err);
       return -1;
